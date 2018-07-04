@@ -1,4 +1,3 @@
-//michi
 package gcg.gui;
 //andre was here
 import gcg.core.Board;
