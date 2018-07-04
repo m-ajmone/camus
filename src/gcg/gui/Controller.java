@@ -1,3 +1,4 @@
+//michi
 package gcg.gui;
 
 import gcg.core.Board;
