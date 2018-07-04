@@ -1,5 +1,6 @@
 package gcg.gui;
-//andre was here
+
+//andreeeeeee
 import gcg.core.Board;
 
 import java.net.URL;
