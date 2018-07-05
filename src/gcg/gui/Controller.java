@@ -59,13 +59,13 @@ public class Controller implements Initializable {
     private int windowWidth = 750;
     private int cellSizePx = 10;
 
-    private PresetHandler presetHandler;
+    //private PresetHandler presetHandler;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        presetHandler = new PresetHandler();
-        AnchorPane anchor = presetHandler.loadPresets(base);
-        presetBox.getChildren().add(anchor);
+        //presetHandler = new PresetHandler();
+        //AnchorPane anchor = presetHandler.loadPresets(base);
+        //presetBox.getChildren().add(anchor);
 
         createBoard(DEFAULT_SIZE, DEFAULT_POSSIBLE_STATE);
         
@@ -103,7 +103,7 @@ public class Controller implements Initializable {
     
     @FXML
     private void onPresetOpen(Event evt) {
-        board = presetHandler.openCurrentPreset(DEFAULT_SIZE);
+        //board = presetHandler.openCurrentPreset(DEFAULT_SIZE);
         createDisplay();
     }
 
@@ -112,16 +112,16 @@ public class Controller implements Initializable {
      */
     @FXML
     private void onOpen(Event evt) {
-        Board newBoard = FileHandler.openFromFile(DEFAULT_SIZE);
+        /*Board newBoard = FileHandler.openFromFile(DEFAULT_SIZE);
         if (newBoard != null) {
             board = newBoard;
             createDisplay();
-        }
+        }*/
     }
 
     @FXML
     private void onSave(Event evt) {
-        FileHandler.saveToFile(board);
+        //FileHandler.saveToFile(board);
     }
 
 

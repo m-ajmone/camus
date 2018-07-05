@@ -16,7 +16,7 @@ public class GriffeathCrystallineGrowth extends Application {
 
         primaryStage.setTitle("Griffeath's Crystalline Growths");
         primaryStage.setScene(new Scene(parent));
-         primaryStage.show();
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

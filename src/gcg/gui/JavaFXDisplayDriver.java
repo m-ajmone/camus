@@ -24,6 +24,7 @@ public class JavaFXDisplayDriver implements DisplayDriver {
         }
         
         Cell[][] g = board.getGrid();
+        Integer x;
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 Color c = colorsArray[g[i][j].getState()];
@@ -58,12 +59,12 @@ public class JavaFXDisplayDriver implements DisplayDriver {
         r.setOnMousePressed(e -> { r.setFill(Color.GRAY); });
 
         r.setOnMouseClicked(e -> {
-            r.setFill(colorsArray[c.getState()]);
             int ns = c.getState();
             if(ns != 0)
             	ns--;
             else
             	ns = colorsArray.length - 1;
+            r.setFill(colorsArray[ns]);
             c.setNewState(ns);
             c.updateState();
         });
