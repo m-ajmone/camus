@@ -4,8 +4,10 @@ import camus.core.GofBoard;
 import camus.core.GcgBoard;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import camus.music.Spartito;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
@@ -34,9 +36,9 @@ import javafx.util.Duration;
 
 public class Controller implements Initializable {
     
-    private final int    DEFAULT_SIZE = 35;
+    private final int    DEFAULT_SIZE = 10;
     private final double DEFAULT_PROB = 0.3;
-    private final int DEFAULT_POSSIBLE_STATE = 15;
+    private final int DEFAULT_POSSIBLE_STATE = 10;
 
     @FXML
     private FlowPane baseGof;
@@ -64,7 +66,8 @@ public class Controller implements Initializable {
     
     private int windowWidth = 750;
     private int cellSizePx = 5;
-
+    
+    private Spartito spartito;
     //private PresetHandler presetHandler;
 
     @Override
@@ -76,6 +79,7 @@ public class Controller implements Initializable {
         createBoardGof(DEFAULT_SIZE, DEFAULT_PROB);
         createBoardGcg(DEFAULT_SIZE, DEFAULT_POSSIBLE_STATE);
         createDisplay();
+        spartito = new Spartito();
         
         attachResizeListener();
     }
@@ -89,8 +93,10 @@ public class Controller implements Initializable {
             display.displayBoardGof(gofBoard);
             gcgBoard.update();
             display.displayBoardGcg(gcgBoard);
+            
+            spartito.estrazione(gofBoard, gcgBoard);
         }));
-
+        
         loop.setCycleCount(100);
         loop.play();
     }
@@ -99,6 +105,7 @@ public class Controller implements Initializable {
     private void onStop(Event evt) {
         toggleButtons(true);
         loop.stop();
+        spartito.printList();
     }
 
     @FXML

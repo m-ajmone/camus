@@ -38,7 +38,7 @@ public class GofBoard {
     public int getSize() {
         return width;
     }
-
+    
     public int neighboursCountAt(int row, int col) {
         int sum=0;
         // Positions numbered as phone dial
@@ -91,6 +91,7 @@ public class GofBoard {
 
         return sum;
     }
+    
 
     public boolean isAlive(int row, int col) {
         return grid[row][col].getState();

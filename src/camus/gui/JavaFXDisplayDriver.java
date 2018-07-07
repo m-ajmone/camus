@@ -25,10 +25,7 @@ public class JavaFXDisplayDriver implements DisplayDriver {
         tilePaneGcg.setPrefRows(boardSize);
         tilePaneGcg.setPrefColumns(boardSize);
         
-        colorsArray = new Color[gcgBoard.getPossibleState()];
-        for(int i = 0; i<colorsArray.length; i++){
-        	colorsArray[i] = new Color(Math.random(), Math.random(), Math.random(), Math.random());
-        }
+        intiColorsArray(gcgBoard.getPossibleState());
         
         GofCell[][] gofGrid = gofBoard.getGrid();
         for (int i = 0; i < boardSize; i++) {
@@ -52,7 +49,46 @@ public class JavaFXDisplayDriver implements DisplayDriver {
             }
         }
     }
-
+    
+    private void intiColorsArray(int p){
+    	colorsArray = new Color[p];
+        for(int i = 0; i<colorsArray.length; i++){
+        	
+        	switch (i) {
+    		case 0:
+        		colorsArray[i] = Color.BLUE;
+        		break;
+    		case 1:
+        		colorsArray[i] = Color.RED;
+        		break;
+    		case 2:
+        		colorsArray[i] = Color.YELLOW;
+        		break;
+    		case 3:
+    			colorsArray[i] = Color.GREEN;
+    			break;
+    		case 4:
+    			colorsArray[i] = Color.WHITE;
+    			break;
+    		case 5:
+    			colorsArray[i] = Color.BLACK;
+    			break;
+    		case 6:
+    			colorsArray[i] = Color.PINK;
+    			break;
+    		case 7:
+    			colorsArray[i] = Color.SKYBLUE;
+    			break;
+    		case 8:
+    			colorsArray[i] = Color.BROWN;
+    			break;
+    		default:
+    			colorsArray[i] = new Color(Math.random(), Math.random(), Math.random(), Math.random());
+        	}
+        	
+        }
+    }
+    
     @Override
     public void displayBoardGof(GofBoard gofBoard) {
         GofCell[][] gofGrid = gofBoard.getGrid();
