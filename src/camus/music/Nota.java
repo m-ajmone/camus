@@ -24,6 +24,7 @@ public class Nota {
 	
 	public void setTimeMorfology(String[] timeMorfology){
 		this.timeMorfology = timeMorfology;
+		
 	}
 	
 	public int getReference() {

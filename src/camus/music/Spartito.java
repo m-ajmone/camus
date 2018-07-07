@@ -7,9 +7,9 @@ import camus.music.Strumento;
 import camus.core.*;
 
 public class Spartito {
-	static int reference = 0;
-	static ArrayList<ArrayList<Nota>> spartito= new ArrayList<ArrayList<Nota>>();
-	static ArrayList<Strumento> orchestra = new ArrayList <Strumento>();
+	private int reference = 0;
+	private ArrayList<ArrayList<Nota>> spartito= new ArrayList<ArrayList<Nota>>();
+	private ArrayList<Strumento> orchestra = new ArrayList <Strumento>();
 	
 	public void MusicController(){
 		
@@ -218,6 +218,14 @@ public class Spartito {
 		}
 	}
 	
+	public ArrayList<ArrayList<Nota>> getSpartito() {
+		return spartito;
+	}
+
+	public void setSpartito(ArrayList<ArrayList<Nota>> spartito) {
+		this.spartito = spartito;
+	}
+
 	public static void print2DB(boolean mat[][])
     {
         for (int i = 0; i < mat.length; i++) {

@@ -7,6 +7,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import camus.music.Nota;
+import camus.music.Sintetizzatore;
 import camus.music.Spartito;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -68,6 +70,8 @@ public class Controller implements Initializable {
     private int cellSizePx = 5;
     
     private Spartito spartito;
+    private Sintetizzatore sint;
+    
     //private PresetHandler presetHandler;
 
     @Override
@@ -80,6 +84,7 @@ public class Controller implements Initializable {
         createBoardGcg(DEFAULT_SIZE, DEFAULT_POSSIBLE_STATE);
         createDisplay();
         spartito = new Spartito();
+        sint = new Sintetizzatore();
         
         attachResizeListener();
     }
@@ -102,10 +107,13 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void onStop(Event evt) {
+    private void onStop(Event evt) throws InterruptedException {
         toggleButtons(true);
         loop.stop();
         spartito.printList();
+        
+        sint.play(spartito);
+        //sint.play(spartito.getSpartito().get(0).get(0));
     }
 
     @FXML
