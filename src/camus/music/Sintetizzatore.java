@@ -38,32 +38,70 @@ public class Sintetizzatore {
         System.out.println("[STATE] Instruments: " + instruments.length);
     }
     
-    public void play(Nota nota) throws InterruptedException{
-    	int lower = 30;
-    	int step = 4;
-    	
-    	synthesizer.getChannels()[0].programChange((nota.getStrumento() * 2)+80);
-    	
-    	midiChannels[0].noteOn(lower + (nota.getReference()*step), 6000);
-    	midiChannels[0].noteOn(lower + (nota.getNote2()*step), 6000);
-    	midiChannels[0].noteOn(lower + (nota.getNote3()*step), 6000);
-    	Thread.sleep(400);
-    	midiChannels[0].noteOff(lower + (nota.getReference()*step), 6000);
-    	midiChannels[0].noteOff(lower + (nota.getNote2()*step), 6000);
-    	midiChannels[0].noteOff(lower + (nota.getNote3()*step), 6000);
-    }
-    
     public void play(Spartito s) throws InterruptedException{
     	ArrayList<ArrayList<Nota>> spartito = s.getSpartito();
     	
     	int length = spartito.size();
 		for (int i = 0; i < length; i++){
-			int length2 = spartito.get(i).size();
+			/*int length2 = spartito.get(i).size();
 			for (int j = 0; j < length2; j++){
 				Nota nota = spartito.get(i).get(j);
 				play(nota);
-			}
-			
+			}*/
+			play(spartito.get(i));
 		}
+    }
+    
+    public void play(ArrayList<Nota> step) throws InterruptedException{
+    	
+    	int length2 = step.size();
+		for (int j = 0; j < length2; j++){
+			Nota nota = step.get(j);
+			//play(nota);
+			startNote(nota);
+		}
+		Thread.sleep(400);
+		for (int j = 0; j < length2; j++){
+			Nota nota = step.get(j);
+			//play(nota);
+			stopNote(nota);
+		}
+    }
+    
+    public void play(Nota nota) throws InterruptedException{
+    	int lower = 30;
+    	int step = 4;
+    	
+    	synthesizer.getChannels()[0].programChange((nota.getStrumento() * 2)+40);
+    	
+    	midiChannels[0].noteOn(lower + (nota.getReference()*step), 6000);
+    	midiChannels[0].noteOn(lower + (nota.getNote2()*step), 6000);
+    	midiChannels[0].noteOn(lower + (nota.getNote3()*step), 6000);
+    	//Thread.sleep(100);
+    	midiChannels[0].noteOff(lower + (nota.getReference()*step), 6000);
+    	midiChannels[0].noteOff(lower + (nota.getNote2()*step), 6000);
+    	midiChannels[0].noteOff(lower + (nota.getNote3()*step), 6000);
+    }
+    
+    public void startNote(Nota nota) throws InterruptedException{
+    	int lower = 30;
+    	int step = 4;
+    	
+    	synthesizer.getChannels()[0].programChange((nota.getStrumento() * 2)+40);
+    	
+    	midiChannels[0].noteOn(lower + (nota.getReference()*step), 6000);
+    	midiChannels[0].noteOn(lower + (nota.getNote2()*step), 6000);
+    	midiChannels[0].noteOn(lower + (nota.getNote3()*step), 6000);
+    }
+    
+    public void stopNote(Nota nota) throws InterruptedException{
+    	int lower = 30;
+    	int step = 4;
+    	
+    	synthesizer.getChannels()[0].programChange((nota.getStrumento() * 2)+40);
+    	
+    	midiChannels[0].noteOff(lower + (nota.getReference()*step), 6000);
+    	midiChannels[0].noteOff(lower + (nota.getNote2()*step), 6000);
+    	midiChannels[0].noteOff(lower + (nota.getNote3()*step), 6000);
     }
 }

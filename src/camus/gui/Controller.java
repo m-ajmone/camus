@@ -100,6 +100,14 @@ public class Controller implements Initializable {
             display.displayBoardGcg(gcgBoard);
             
             spartito.estrazione(gofBoard, gcgBoard);
+            int size = spartito.getSpartito().size();
+            try {
+				sint.play(spartito.getSpartito().get(size - 1));
+				//Thread.sleep(200);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
         }));
         
         loop.setCycleCount(100);
@@ -112,7 +120,7 @@ public class Controller implements Initializable {
         loop.stop();
         spartito.printList();
         
-        sint.play(spartito);
+        //sint.play(spartito);
         //sint.play(spartito.getSpartito().get(0).get(0));
     }
 
@@ -167,37 +175,19 @@ public class Controller implements Initializable {
 
     @FXML
     private void onAbout(Event evt) {
-        // TEXT //
-        Text text1 = new Text("Conway's Game of Life\n");
-        text1.setFont(Font.font(30));
-        Text text2 = new Text(
-                "\nThe Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970.\n"
-                        + "The game is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Game of Life by creating an initial configuration and observing how it evolves or, for advanced players, by creating patterns with particular properties."
-                );
-        Text text3 = new Text("\n\nRules\n");
-        text3.setFont(Font.font(20));
-        Text text4 = new Text(
-                "\nThe universe of the Game of Life is a two-dimensional orthogonal grid of square cells, each of which is in one of two possible states, alive or dead. Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:\n"
-                        +"\n1) Any live cell with fewer than two live neighbours dies, as if caused by under-population.\n"
-                        +"2) Any live cell with two or three live neighbours lives on to the next generation.\n"
-                        +"3) Any live cell with more than three live neighbours dies, as if by overcrowding.\n"
-                        +"4) Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.\n\nMore on Wikipedia:\n"
-                );
-
-        Hyperlink link = new Hyperlink("http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life <-------not working");
-        TextFlow tf = new TextFlow(text1,text2,text3,text4,link);
-        tf.setPadding(new Insets(10, 10, 10, 10));
-        tf.setTextAlignment(TextAlignment.JUSTIFY);
-        // END TEXT, START WINDOW //
-        final Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(new Stage());
-        VBox dialogVbox = new VBox(20);
-        dialogVbox.getChildren().add(tf);
-        Scene dialogScene = new Scene(dialogVbox, 450, 500);
-        dialog.setScene(dialogScene);
-        dialog.show();
-        // END WINDOW //
+    	gofBoard.update();
+        display.displayBoardGof(gofBoard);
+        gcgBoard.update();
+        display.displayBoardGcg(gcgBoard);
+        
+        spartito.estrazione(gofBoard, gcgBoard);
+        int size = spartito.getSpartito().size();
+        try {
+			sint.play(spartito.getSpartito().get(size - 1));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     }
     
     private void toggleButtons(boolean enable) {
