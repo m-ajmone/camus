@@ -135,7 +135,7 @@
             </VBox>
             <BorderPane prefHeight="33.0" prefWidth="195.0">
                <center>
-                  <Button fx:id="randomizeButton" mnemonicParsing="false" onAction="#onRandomize" text="Randomize" BorderPane.alignment="CENTER" />
+                  <Button fx:id="randomizeButton" mnemonicParsing="false" onAction="#onRandomize" text="Play" BorderPane.alignment="CENTER" />
                </center>
                <right>
                   <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" text="Clear" BorderPane.alignment="CENTER" />

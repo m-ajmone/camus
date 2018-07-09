@@ -38,9 +38,9 @@ import javafx.util.Duration;
 
 public class Controller implements Initializable {
     
-    private final int    DEFAULT_SIZE = 10;
+    private final int    DEFAULT_SIZE = 16;
     private final double DEFAULT_PROB = 0.3;
-    private final int DEFAULT_POSSIBLE_STATE = 10;
+    private final int DEFAULT_POSSIBLE_STATE = 4;
 
     @FXML
     private FlowPane baseGof;
@@ -102,8 +102,8 @@ public class Controller implements Initializable {
             spartito.estrazione(gofBoard, gcgBoard);
             int size = spartito.getSpartito().size();
             try {
-				sint.play(spartito.getSpartito().get(size - 1));
-				//Thread.sleep(200);
+				//sint.play(spartito.getSpartito().get(size - 1));
+				Thread.sleep(50);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -131,9 +131,11 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void onRandomize(Event evt) {
-        createBoardGof(DEFAULT_SIZE, (double) countSlider.getValue()/100);
-        createBoardGcg(DEFAULT_SIZE, 10);
+    private void onRandomize(Event evt) throws InterruptedException {
+        /*createBoardGof(DEFAULT_SIZE, (double) countSlider.getValue()/100);
+        createBoardGcg(DEFAULT_SIZE, 10);*/
+    	spartito.translate();
+    	sint.playFlow(spartito, 128);
     }
     
     @FXML

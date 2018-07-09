@@ -17,7 +17,7 @@ public class Strumento {
 		case 3:
 			strumento = 3;
 			
-		}	
+		}
 	}
 
 	public int getStrumento() {

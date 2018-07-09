@@ -7,9 +7,10 @@ import camus.music.Strumento;
 import camus.core.*;
 
 public class Spartito {
-	private int reference = 0;
+	private int reference = 60;
 	private ArrayList<ArrayList<Nota>> spartito= new ArrayList<ArrayList<Nota>>();
 	private ArrayList<Strumento> orchestra = new ArrayList <Strumento>();
+	private ArrayList<ArrayList<int[]>> flow;
 	
 	public void MusicController(){
 		
@@ -193,6 +194,86 @@ public class Spartito {
 		return timeMorph;
 	}
 	
+	public int getSpartitoSize(){
+		int sum = 0;
+		for(int i = 0; i < spartito.size(); i++){
+			sum += spartito.get(i).size();
+		}
+		return sum;
+	}
+	
+	public void translate(){
+		int flowSize = getSpartitoSize() * 128;
+		flow = new ArrayList<ArrayList<int[]>>();
+		/*flow.set(30, new ArrayList<int[]>());
+		flow.get(30).add(new int[2]);
+		flow.get(30).get(0)[0] = 3;*/
+		
+		for(int k = 0; k < flowSize; k++)
+			flow.add(null);
+		
+		int array[];
+		int index = 0; 
+		int length1 = spartito.size();
+		for(int i = 0; i < length1; i++){
+			int length2 = spartito.get(i).size();
+			for(int j = 0; j < length2; j++){
+				Nota nota = spartito.get(i).get(j);
+				
+				array = new int[2];
+				array[0] = nota.getB();
+				array[1] = nota.getStrumento();
+				int startB = nota.getbStart();
+				if(flow.get(index + startB) == null)
+					flow.set(index + startB, new ArrayList<int[]>());
+				flow.get(index + startB).add(array);
+				
+				array = new int[2];
+				array[0] = nota.getM();
+				array[1] = nota.getStrumento();
+				int startM = nota.getmStart();
+				if(flow.get(index + startM) == null)
+					flow.set(index + startM, new ArrayList<int[]>());
+				flow.get(index + startM).add(array);
+				
+				array = new int[2];
+				array[0] = nota.getU();
+				array[1] = nota.getStrumento();
+				int startU = nota.getuStart();
+				if(flow.get(index + startU) == null)
+					flow.set(index + startU, new ArrayList<int[]>());
+				flow.get(index + startU).add(array);
+				
+				
+				array = new int[2];
+				array[0] = nota.getB();
+				array[1] = -1;
+				int endB = nota.getbEnd();
+				if(flow.get(index + endB) == null)
+					flow.set(index + endB, new ArrayList<int[]>());
+				flow.get(index + endB).add(array);
+				
+				array = new int[2];
+				array[0] = nota.getM();
+				array[1] = -1;
+				int endM = nota.getmEnd();
+				if(flow.get(index + endM) == null)
+					flow.set(index + endM, new ArrayList<int[]>());
+				flow.get(index + endM).add(array);
+			
+				
+				array = new int[2];
+				array[0] = nota.getU();
+				array[1] = -1;
+				int endU = nota.getuEnd();
+				if(flow.get(index + endU) == null)
+					flow.set(index + endU, new ArrayList<int[]>());
+				flow.get(index + endU).add(array);
+				
+				index = index + 64;
+			}
+		}
+	}
 	public void printList() {
 	    /*for(Nota elemento : spartito) {
 	    	System.out.print("|" + elemento.getReference() + " " + elemento.getNote2() + " " + elemento.getNote3() + "| ");
@@ -213,7 +294,8 @@ public class Spartito {
 			int length2 = spartito.get(i).size();
 			for (int j = 0; j < length2; j++){
 				Nota nota = spartito.get(i).get(j);
-				System.out.println(i + ": " + j + " ->  |" + nota.getReference() + " " + nota.getNote2() + " " + nota.getNote3() + "|  \ttimeMorfology: " + nota.getTimeMorfology()[0] + "; " + nota.getTimeMorfology()[1] + "  \tstrumento: " + nota.getStrumento());
+				System.out.println(i + ": " + j + " ->  |" + nota.getM() + " " + nota.getB() + " " + nota.getU() + "|  \ttimeMorfology: " + nota.getTimeMorfology()[0] + "; " + nota.getTimeMorfology()[1] + "  \tstrumento: " + nota.getStrumento());
+				System.out.println("\t M:" + nota.getmStart() + " : " + nota.getmEnd() + "\t B:" + nota.getbStart() + " : " + nota.getbEnd() + "\t U:" + nota.getuStart() + " : " + nota.getuEnd());
 			}
 		}
 	}
@@ -245,6 +327,16 @@ public class Spartito {
             System.out.print("\n");
         }
     }
+
+	public ArrayList<ArrayList<int[]>> getFlow() {
+		return flow;
+	}
+
+	public void setFlow(ArrayList<ArrayList<int[]>> flow) {
+		this.flow = flow;
+	}
+	
+	
 			
 }
 
