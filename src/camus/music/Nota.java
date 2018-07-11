@@ -14,7 +14,7 @@ public class Nota {
 	private int uStart;
 	private int uEnd;
 
-	public static final int[] crome = {1, 2, 4, 8, 16, 32, 64};
+	public static final int[] crome = {4,8};
 
 	public Nota(int reference, int x, int y) {
 		super();
@@ -37,8 +37,48 @@ public class Nota {
 	}
 
 	public void setTimes(){
+
 		int start[] = new int[3];
-		int end[] = new int[3];
+		start[0] = crome[(int)(Math.random()*2)];
+		start[1] = start[0] + crome[(int)(Math.random()*2)];
+		start[2] = start[1] + crome[(int)(Math.random()*2)];
+
+		if(timeMorfology[0].indexOf('[') == 0){
+			bStart = start[0];
+			mStart = start[0];
+			uStart = start[0];
+		}else{
+			int i;
+			for(i = 0; i < timeMorfology[0].length(); i++){
+				if(timeMorfology[0].charAt(i) == 'B')
+					bStart = start[i];
+				if(timeMorfology[0].charAt(i) == 'M')
+					mStart = start[i];
+				if(timeMorfology[0].charAt(i) == 'U')
+					uStart = start[i];
+				if(timeMorfology[0].charAt(i) == '[')
+					break;
+			}
+			if(i < timeMorfology[0].length()){
+				if(timeMorfology[0].charAt(0) == 'B'){
+					uStart = start[i];
+					mStart = start[i];
+				}
+				if(timeMorfology[0].charAt(0) == 'M'){
+					uStart = start[i];
+					bStart = start[i];
+				}
+				if(timeMorfology[0].charAt(0) == 'U'){
+					bStart = start[i];
+					mStart = start[i];
+				}
+			}			
+		}
+
+
+
+		/*int start[] = new int[3];
+		int end[] = new int[3];			
 		start[0] = crome[(int)(Math.random() * 3)];
 		start[1] = start[0] + crome[(int)(Math.random() * 4)];
 		start[2] = start[1] + crome[(int)(Math.random() * 5)];
@@ -47,7 +87,7 @@ public class Nota {
 		end[1] = end[2] - crome[(int)(Math.random() * 4)];
 		end[0] = end[1] - crome[(int)(Math.random() * 5)];
 
-		
+
 		if(timeMorfology[0].indexOf('[') == 0){
 			bStart = start[0];
 			mStart = start[0];
@@ -80,7 +120,7 @@ public class Nota {
 				}
 			}
 		}
-		
+
 		if(timeMorfology[1].indexOf('[') == 0){
 			bEnd = end[0];
 			mEnd = end[0];
@@ -113,6 +153,7 @@ public class Nota {
 				}
 			}
 		}
+		 */
 	}
 
 	public int getB() {
@@ -180,6 +221,6 @@ public class Nota {
 	public void setuEnd(int uEnd) {
 		this.uEnd = uEnd;
 	}
-	
-	
+
+
 }

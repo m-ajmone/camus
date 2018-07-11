@@ -33,7 +33,7 @@ import javafx.util.Duration;
 public class Controller implements Initializable {
     
     private final int    DEFAULT_SIZE = 35;
-    private final int DEFAULT_POSSIBLE_STATE = 25;
+    private final int DEFAULT_POSSIBLE_STATE = 5;
 
     @FXML
     private FlowPane base;

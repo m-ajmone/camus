@@ -7,7 +7,8 @@ import camus.music.Strumento;
 import camus.core.*;
 
 public class Spartito {
-	private int reference = 60;
+	private int reference = 0;
+	private int reference1 = 5;
 	private ArrayList<ArrayList<Nota>> spartito= new ArrayList<ArrayList<Nota>>();
 	private ArrayList<Strumento> orchestra = new ArrayList <Strumento>();
 	private ArrayList<ArrayList<int[]>> flow;
@@ -27,11 +28,14 @@ public class Spartito {
 		String tm[] = new String[2];
 		Nota newNota;
 		
-		for(int i=0; i < width; i++) {
-			for(int j=0; j < width; j++) {
+		for(int j=0; j < width; j++) {
+			for(int i=0; i < width; i++) {
 				if (gofGrid[i][j].getState()) {
 					
-					newNota = new Nota(reference, width - i, j+1);
+					if(width-i < 5 && j+1 <5)
+						newNota = new Nota(reference, width - i, j+1);
+					else
+						newNota = new Nota(reference1,width-i,j+1);
 					
 			        a = false;
 			        if (j != 0){
@@ -244,6 +248,32 @@ public class Spartito {
 					flow.set(index + startU, new ArrayList<int[]>());
 				flow.get(index + startU).add(array);
 				
+				index = index + Math.max(startB, Math.max(startM, startU));
+				
+				/*
+				array[0] = nota.getB();
+				array[1] = nota.getStrumento();
+				int startB = nota.getbStart();
+				if(flow.get(index + startB) == null)
+					flow.set(index + startB, new ArrayList<int[]>());
+				flow.get(index + startB).add(array);
+				
+				array = new int[2];
+				array[0] = nota.getM();
+				array[1] = nota.getStrumento();
+				int startM = nota.getmStart();
+				if(flow.get(index + startM) == null)
+					flow.set(index + startM, new ArrayList<int[]>());
+				flow.get(index + startM).add(array);
+				
+				array = new int[2];
+				array[0] = nota.getU();
+				array[1] = nota.getStrumento();
+				int startU = nota.getuStart();
+				if(flow.get(index + startU) == null)
+					flow.set(index + startU, new ArrayList<int[]>());
+				flow.get(index + startU).add(array);
+				
 				
 				array = new int[2];
 				array[0] = nota.getB();
@@ -271,6 +301,7 @@ public class Spartito {
 				flow.get(index + endU).add(array);
 				
 				index = index + 64;
+				*/
 			}
 		}
 	}

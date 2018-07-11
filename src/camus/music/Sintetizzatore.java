@@ -13,7 +13,8 @@ public class Sintetizzatore {
 	private Synthesizer synthesizer;
     private final MidiChannel[] midiChannels;
     private final Instrument[] instruments;
-    private static int[] orchestra = {128, 128, 57, 27};
+    private static int[] orchestra = {1, 2, 1, 2};
+    private int[] eMinorPentatonic = {28, 31, 33, 35, 38, 40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74,79,81,83,86,88,91};
     
     public Sintetizzatore() {
         try {
@@ -128,10 +129,10 @@ public class Sintetizzatore {
     				int array[] = beat.get(j);
     				if(array[1] != -1) {
     			    	synthesizer.getChannels()[0].programChange(orchestra[array[1]]);
-    			    	midiChannels[0].noteOn(array[0], 6000);
+    			    	midiChannels[0].noteOn(eMinorPentatonic[array[0]], 6000);
     				}
     				else
-    			    	midiChannels[0].noteOff(array[0], 6000);
+    			    	midiChannels[0].noteOff(eMinorPentatonic[array[0]], 6000);
     			}
     		}
     		Thread.sleep(spacing);

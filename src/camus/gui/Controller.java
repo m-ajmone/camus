@@ -38,7 +38,7 @@ import javafx.util.Duration;
 
 public class Controller implements Initializable {
     
-    private final int    DEFAULT_SIZE = 16;
+    private final int    DEFAULT_SIZE = 10;
     private final double DEFAULT_PROB = 0.3;
     private final int DEFAULT_POSSIBLE_STATE = 4;
 
@@ -135,7 +135,7 @@ public class Controller implements Initializable {
         /*createBoardGof(DEFAULT_SIZE, (double) countSlider.getValue()/100);
         createBoardGcg(DEFAULT_SIZE, 10);*/
     	spartito.translate();
-    	sint.playFlow(spartito, 128);
+    	sint.playFlow(spartito, 90);
     }
     
     @FXML
