@@ -36,7 +36,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Controller implements Initializable {
+public class ControllerOLD implements Initializable {
     
     private final int    DEFAULT_SIZE = 16;
     private final double DEFAULT_PROB = 0.3;

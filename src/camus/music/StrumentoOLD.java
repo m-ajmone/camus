@@ -1,9 +1,9 @@
 package camus.music;
 
-public class Strumento {
+public class StrumentoOLD {
 	private int strumento;
 	
-	public Strumento(int livello) {
+	public StrumentoOLD(int livello) {
 		strumento = livello;
 		/*switch (livello) {
 		case 0:

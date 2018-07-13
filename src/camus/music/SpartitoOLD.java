@@ -6,7 +6,7 @@ import camus.music.Nota;
 import camus.music.Strumento;
 import camus.core.*;
 
-public class Spartito {
+public class SpartitoOLD {
 	private int reference = 60;
 	private ArrayList<ArrayList<Nota>> spartito= new ArrayList<ArrayList<Nota>>();
 	private ArrayList<Strumento> orchestra = new ArrayList <Strumento>();

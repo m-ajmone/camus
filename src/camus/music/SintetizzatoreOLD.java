@@ -9,13 +9,13 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
-public class Sintetizzatore {
+public class SintetizzatoreOLD {
 	private Synthesizer synthesizer;
     private final MidiChannel[] midiChannels;
     private final Instrument[] instruments;
     private static int[] orchestra = {24, 24, 24, 24};
     
-    public Sintetizzatore() {
+    public SintetizzatoreOLD() {
         try {
             synthesizer = MidiSystem.getSynthesizer();
             synthesizer.open();

@@ -92,7 +92,7 @@ public class Controller implements Initializable {
         	createBoardGcg(i, DEFAULT_SIZE, DEFAULT_POSSIBLE_STATE);
         	spartiti[i] = new Spartito();
         	spartiti[i].defineOrchestra();
-    	}
+        }
         createDisplay();
         //spartito = new Spartito();
         //spartito.defineOrchestra();
@@ -152,7 +152,7 @@ public class Controller implements Initializable {
         /*createBoardGof(DEFAULT_SIZE, (double) countSlider.getValue()/100);
         createBoardGcg(DEFAULT_SIZE, 10);*/
     	for(int i = 0; i < num ; i++){
-	    	spartiti[i].translate();
+	    	spartiti[i].translate(i * 256);
 	    	spartiti[i].defineBeat();
     	}
     	//spartiti[0].printFlow(1000);

@@ -1,6 +1,6 @@
 package camus.music;
 
-public class Nota {
+public class NotaOLD {
 	private int b;
 	private int m;
 	private int u;
@@ -16,7 +16,7 @@ public class Nota {
 
 	public static final int[] crome = {1, 2, 4, 8, 16, 32, 64};
 
-	public Nota(int reference, int x, int y) {
+	public NotaOLD(int reference, int x, int y) {
 		super();
 		this.b = reference;
 		this.m = reference + x;

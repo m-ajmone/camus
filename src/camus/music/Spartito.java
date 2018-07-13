@@ -7,7 +7,7 @@ import camus.music.Strumento;
 import camus.core.*;
 
 public class Spartito {
-	private int reference = 60;
+	private int reference = 50;
 	private ArrayList<ArrayList<Nota>> spartito= new ArrayList<ArrayList<Nota>>();
 	private ArrayList<Strumento> orchestra = new ArrayList <Strumento>();
 	private ArrayList<ArrayList<int[]>> flow;
@@ -47,14 +47,14 @@ public class Spartito {
 		int width = gofGrid[0].length;
 		String tm[] = new String[2];
 		Nota newNota;
-
+		int middle;
 		for(int j=0; j < width; j++) {
 			for(int i=0; i < width; i++) {
 				if (gofGrid[i][j].getState()) {
 					//reference = 40 + (int)(Math.random() * 17);
 					//newNota = new Nota(reference, width - i, j+1);
-					reference = 50;
-					newNota = new Nota(0, reference + (width-i) + j+1, 0);
+					middle = reference + (width-i) + j+1;
+					newNota = new Nota(middle - 2, 2, 2);
 
 					a = false;
 					if (j != 0){
@@ -314,7 +314,7 @@ public class Spartito {
 		return sum;
 	}
 
-	public void translate(){
+	public void translate(int index){
 		int flowSize = getSpartitoSize() * (quartina * 10);
 		flow = new ArrayList<ArrayList<int[]>>();
 
@@ -323,7 +323,6 @@ public class Spartito {
 
 		int array[];
 		int max = 0;
-		int index = 0; 
 		int length1 = spartito.size();
 		for(int i = 0; i < length1; i++){
 			int length2 = spartito.get(i).size();
