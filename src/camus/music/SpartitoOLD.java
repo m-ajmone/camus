@@ -13,31 +13,7 @@ public class Spartito {
 	private ArrayList<ArrayList<int[]>> flow;
 	private int quartina = 64;
 	
-	public void defineOrchestra(){
-		//Strumento(String name, int strumentIndex, int lunghezzaNota, int distanzaNote, int delay)
-		Strumento s;
-		s = new Strumento("Xylophone", 13, 0.5, 0, 0, true);
-		orchestra.add(s);
-		s = new Strumento("Piano 1", 1, 1, 0, 0, true);
-		orchestra.add(s);
-        s = new Strumento("Nylon-str.Gt", 24, 1.8, 0, 0.2);
-        orchestra.add(s);
-        s = new Strumento("Violin", 40, 4, 0, 0);
-        orchestra.add(s);
-        s = new Strumento("Taiko", 116, 1, 2, 0);
-        orchestra.add(s);
-        s = new Strumento("Piano 1", 1, 4, 0.5, 0);
-		orchestra.add(s);
-        s = new Strumento("Voice Oohs", 53, 4, 1, 0);
-        orchestra.add(s);
-        s = new Strumento("Trumpet", 56, 2, 1, 0);
-        orchestra.add(s);
-        s = new Strumento("Gt.Harmonics", 31, 0.7, 0, 0.2, false);
-        orchestra.add(s);
-        
-	}
-	
-	public void estrazione(GofBoard gofBoard, GcgBoard gcgBoard, int strumento) {
+	public void estrazione(GofBoard gofBoard, GcgBoard gcgBoard) {
 		ArrayList<Nota> step = new ArrayList<Nota>();
 
 		GofCell[][] gofGrid = gofBoard.getGrid();
@@ -48,13 +24,11 @@ public class Spartito {
 		String tm[] = new String[2];
 		Nota newNota;
 
-		for(int j=0; j < width; j++) {
-			for(int i=0; i < width; i++) {
+		for(int i=0; i < width; i++) {
+			for(int j=0; j < width; j++) {
 				if (gofGrid[i][j].getState()) {
-					//reference = 40 + (int)(Math.random() * 17);
-					//newNota = new Nota(reference, width - i, j+1);
-					reference = 50;
-					newNota = new Nota(0, reference + (width-i) + j+1, 0);
+					reference = 40 + (int)(Math.random() * 17);
+					newNota = new Nota(reference, width - i, j+1);
 
 					a = false;
 					if (j != 0){
@@ -113,100 +87,11 @@ public class Spartito {
 					}
 
 					tm = calculateTimeMorphology(a, b, c, d, m, n, o, p);
-					newNota.setStrumento(orchestra.get(strumento));
-					newNota.setLunghezzaGcg(gcgGrid[i][j].getState());
 					newNota.setTimeMorfology(tm, quartina);
+					newNota.setStrumento(gcgGrid[i][j].getState());
 					step.add(newNota);
 
 					//orchestra.add(new Strumento(gcgGrid[i][j].getState()));
-				}
-			}
-		}
-		spartito.add(step);
-	}
-	
-	public void estrazione(GofBoard[] gofBoards, GcgBoard[] gcgBoards, int num) {
-		ArrayList<Nota> step = new ArrayList<Nota>();
-		
-		for(int k = 0; k < num; k++){
-			GofCell[][] gofGrid = gofBoards[k].getGrid();
-			GcgCell[][] gcgGrid = gcgBoards[k].getGrid();
-	
-			boolean a, b, c, d, m, n, o, p;
-			int width = gofGrid[0].length;
-			String tm[] = new String[2];
-			Nota newNota;
-	
-			for(int i=0; i < width; i++) {
-				for(int j=0; j < width; j++) {
-					if (gofGrid[i][j].getState()) {
-						reference = 40 + (int)(Math.random() * 17);
-						newNota = new Nota(reference, width - i, j+1);
-	
-						a = false;
-						if (j != 0){
-							if(gofGrid[i][j-1].getState()){
-								a = true;
-							}
-						}
-	
-						b = false;
-						if (j != width-1){
-							if(gofGrid[i][j+1].getState()){
-								b = true;
-							}
-						}
-	
-						c = false;
-						if (i != width-1){
-							if(gofGrid[i+1][j].getState()){
-								c = true;
-							}
-						}
-	
-						d = false;
-						if (i != 0){
-							if(gofGrid[i-1][j].getState()){
-								d = true;
-							}
-						}
-	
-						m = false;
-						if (i != 0 && j != 0){
-							if(gofGrid[i-1][j-1].getState()){
-								m = true;
-							}
-						}
-	
-						n = false;
-						if (i != width-1 && j != width-1){
-							if(gofGrid[i+1][j+1].getState()){
-								n = true;
-							}
-						}
-	
-						o = false;
-						if (i != width-1 && j != 0){
-							if(gofGrid[i+1][j-1].getState()){
-								o = true;
-							}
-						}
-	
-						p = false;
-						if (i != 0 && j != width - 1){
-							if(gofGrid[i-1][j+1].getState()){
-								p = true;
-							}
-						}
-	
-						tm = calculateTimeMorphology(a, b, c, d, m, n, o, p);
-						newNota.setStrumento(orchestra.get(k));
-						newNota.setLunghezzaGcg(gcgGrid[i][j].getState());
-						newNota.setTimeMorfology(tm, quartina);
-						step.add(newNota);
-	
-						//orchestra.add(new Strumento(gcgGrid[i][j].getState()));
-					}
 				}
 			}
 		}
@@ -315,14 +200,13 @@ public class Spartito {
 	}
 
 	public void translate(){
-		int flowSize = getSpartitoSize() * (quartina * 10);
+		int flowSize = getSpartitoSize() * (quartina * 2);
 		flow = new ArrayList<ArrayList<int[]>>();
 
 		for(int k = 0; k < flowSize; k++)
 			flow.add(null);
 
 		int array[];
-		int max = 0;
 		int index = 0; 
 		int length1 = spartito.size();
 		for(int i = 0; i < length1; i++){
@@ -330,25 +214,25 @@ public class Spartito {
 			for(int j = 0; j < length2; j++){
 				Nota nota = spartito.get(i).get(j);
 
-				/*array = new int[2];
+				array = new int[2];
 				array[0] = nota.getB();
-				array[1] = nota.getStrumento().getStrumentIndex();
+				array[1] = nota.getStrumento();
 				int startB = nota.getbStart();
 				if(flow.get(index + startB) == null)
 					flow.set(index + startB, new ArrayList<int[]>());
-				flow.get(index + startB).add(array);*/
+				flow.get(index + startB).add(array);
 
 				array = new int[2];
 				array[0] = nota.getM();
-				array[1] = nota.getStrumento().getStrumentIndex();
+				array[1] = nota.getStrumento();
 				int startM = nota.getmStart();
 				if(flow.get(index + startM) == null)
 					flow.set(index + startM, new ArrayList<int[]>());
 				flow.get(index + startM).add(array);
 
-				/*array = new int[2];
+				array = new int[2];
 				array[0] = nota.getU();
-				array[1] = nota.getStrumento().getStrumentIndex();
+				array[1] = nota.getStrumento();
 				int startU = nota.getuStart();
 				if(flow.get(index + startU) == null)
 					flow.set(index + startU, new ArrayList<int[]>());
@@ -362,7 +246,6 @@ public class Spartito {
 				if(flow.get(index + endB) == null)
 					flow.set(index + endB, new ArrayList<int[]>());
 				flow.get(index + endB).add(array);
-				max = Math.max(max, index + endB);*/
 
 				array = new int[2];
 				array[0] = nota.getM();
@@ -371,41 +254,18 @@ public class Spartito {
 				if(flow.get(index + endM) == null)
 					flow.set(index + endM, new ArrayList<int[]>());
 				flow.get(index + endM).add(array);
-				max = Math.max(max, index + endM);
 
-				/*array = new int[2];
+
+				array = new int[2];
 				array[0] = nota.getU();
 				array[1] = -1;
 				int endU = nota.getuEnd();
 				if(flow.get(index + endU) == null)
 					flow.set(index + endU, new ArrayList<int[]>());
 				flow.get(index + endU).add(array);
-				max = Math.max(max, index + endU);*/
-				
-				if(nota.getStrumento().isSicronizzazione())
-					index = index + (quartina * 2);
-				else
-					index = max + (int)(quartina * nota.getStrumento().getDistanzaNote());
+
+				index = index + (quartina * 2);
 			}
-		}
-	}
-	
-	public void defineBeat(){
-		int[] startBeat = new int[2];
-		startBeat[0] = 40;
-		startBeat[1] = 4;
-		int[] endBeat = new int[2];
-		endBeat[0] = 40;
-		endBeat[1] = -1;
-		int j;
-		for(int i=0; i<flow.size() - 100; i+=quartina){
-			if(flow.get(i) == null)
-				flow.set(i, new ArrayList<int[]>());
-			flow.get(i).add(startBeat);
-			j = i + 5;
-			if(flow.get(j) == null)
-				flow.set(j, new ArrayList<int[]>());
-			flow.get(j).add(endBeat);
 		}
 	}
 
@@ -487,15 +347,6 @@ public class Spartito {
 		this.quartina = quartina;
 	}
 
-	public ArrayList<Strumento> getOrchestra() {
-		return orchestra;
-	}
-
-	public void setOrchestra(ArrayList<Strumento> orchestra) {
-		this.orchestra = orchestra;
-	}
-	
-	
 }
 
 

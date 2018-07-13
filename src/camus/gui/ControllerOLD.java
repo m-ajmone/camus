@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 import camus.music.Nota;
 import camus.music.Sintetizzatore;
 import camus.music.Spartito;
-import camus.music.Strumento;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
@@ -39,9 +38,9 @@ import javafx.util.Duration;
 
 public class Controller implements Initializable {
     
-    private final int    DEFAULT_SIZE = 15;
+    private final int    DEFAULT_SIZE = 16;
     private final double DEFAULT_PROB = 0.3;
-    private final int DEFAULT_POSSIBLE_STATE = 6;
+    private final int DEFAULT_POSSIBLE_STATE = 4;
 
     @FXML
     private FlowPane baseGof;
@@ -60,10 +59,9 @@ public class Controller implements Initializable {
     @FXML
     private HBox rootBox;
 
-    private GofBoard[] gofBoards;
-    private GcgBoard[] gcgBoards;
-    int num = 4;
-    
+    private GofBoard gofBoard;
+    private GcgBoard gcgBoard;
+
     private JavaFXDisplayDriver display;
 
     private Timeline loop = null;
@@ -71,8 +69,7 @@ public class Controller implements Initializable {
     private int windowWidth = 750;
     private int cellSizePx = 5;
     
-    private ArrayList<Strumento> orchestra = new ArrayList <Strumento>();
-    private Spartito[] spartiti;
+    private Spartito spartito;
     private Sintetizzatore sint;
     
     //private PresetHandler presetHandler;
@@ -83,20 +80,13 @@ public class Controller implements Initializable {
         AnchorPane anchor = presetHandler.loadPresets(base);
         presetBox.getChildren().add(anchor);
 		*/
-    	gofBoards = new GofBoard[num];
-    	gcgBoards = new GcgBoard[num];
-    	spartiti = new Spartito[num];
-    	
-    	for(int i = 0; i < num; i++){
-    		createBoardGof(i, DEFAULT_SIZE, DEFAULT_PROB);
-        	createBoardGcg(i, DEFAULT_SIZE, DEFAULT_POSSIBLE_STATE);
-        	spartiti[i] = new Spartito();
-        	spartiti[i].defineOrchestra();
-    	}
+        createBoardGof(DEFAULT_SIZE, DEFAULT_PROB);
+        createBoardGcg(DEFAULT_SIZE, DEFAULT_POSSIBLE_STATE);
         createDisplay();
-        //spartito = new Spartito();
-        //spartito.defineOrchestra();
+        spartito = new Spartito();
         sint = new Sintetizzatore();
+        
+        attachResizeListener();
     }
 
     @FXML
@@ -104,16 +94,15 @@ public class Controller implements Initializable {
         toggleButtons(false);
 
         loop = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-        	for(int i = 0; i < num; i++){
-	            gofBoards[i].update();
-	            display.displayBoardGof(gofBoards[i]);
-	            gcgBoards[i].update();
-	            display.displayBoardGcg(gcgBoards[i]);
-	            
-	            spartiti[i].estrazione(gofBoards[i], gcgBoards[i], i);
-        	}
-        	
-        	try {
+            gofBoard.update();
+            display.displayBoardGof(gofBoard);
+            gcgBoard.update();
+            display.displayBoardGcg(gcgBoard);
+            
+            spartito.estrazione(gofBoard, gcgBoard);
+            int size = spartito.getSpartito().size();
+            try {
+				//sint.play(spartito.getSpartito().get(size - 1));
 				Thread.sleep(50);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -121,12 +110,12 @@ public class Controller implements Initializable {
 			}
         }));
         
-        for(int j=0; j<num; j++){
-        	gofBoards[j].update();
-            display.displayBoardGof(gofBoards[j]);
-            gcgBoards[j].update();
-            display.displayBoardGcg(gcgBoards[j]);
-        }
+        /*for(int i=0; i<10; i++){
+        	gofBoard.update();
+            display.displayBoardGof(gofBoard);
+            gcgBoard.update();
+            display.displayBoardGcg(gcgBoard);
+        }*/
         loop.setCycleCount(100);
         loop.play();
     }
@@ -135,7 +124,7 @@ public class Controller implements Initializable {
     private void onStop(Event evt) throws InterruptedException {
         toggleButtons(true);
         loop.stop();
-        //spartiti[0].printList();
+        spartito.printList();
         
         //sint.play(spartito);
         //sint.play(spartito.getSpartito().get(0).get(0));
@@ -143,21 +132,17 @@ public class Controller implements Initializable {
 
     @FXML
     private void onClear(Event evt) {
-        createBoardGof(0, DEFAULT_SIZE, 0);
-        createBoardGcg(0, DEFAULT_SIZE, 10);
+        createBoardGof(DEFAULT_SIZE, 0);
+        createBoardGcg(DEFAULT_SIZE, 10);
     }
 
     @FXML
     private void onRandomize(Event evt) throws InterruptedException {
         /*createBoardGof(DEFAULT_SIZE, (double) countSlider.getValue()/100);
         createBoardGcg(DEFAULT_SIZE, 10);*/
-    	for(int i = 0; i < num ; i++){
-	    	spartiti[i].translate();
-	    	spartiti[i].defineBeat();
-    	}
-    	//spartiti[0].printFlow(1000);
-    	
-    	sint.playFlow(spartiti, 120);
+    	spartito.translate();
+    	spartito.printFlow(1000);
+    	sint.playFlow(spartito, 200);
     }
     
     @FXML
@@ -199,15 +184,15 @@ public class Controller implements Initializable {
 
     @FXML
     private void onAbout(Event evt) {
-    	gofBoards[0].update();
-        display.displayBoardGof(gofBoards[0]);
-        gcgBoards[0].update();
-        display.displayBoardGcg(gcgBoards[0]);
+    	gofBoard.update();
+        display.displayBoardGof(gofBoard);
+        gcgBoard.update();
+        display.displayBoardGcg(gcgBoard);
         
-        spartiti[0].estrazione(gofBoards[0], gcgBoards[0], 0);
-        int size = spartiti[0].getSpartito().size();
+        spartito.estrazione(gofBoard, gcgBoard);
+        int size = spartito.getSpartito().size();
         try {
-			sint.play(spartiti[0].getSpartito().get(size - 1));
+			sint.play(spartito.getSpartito().get(size - 1));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -227,18 +212,18 @@ public class Controller implements Initializable {
         stopButton.setDisable(enable);
     }
 
-    private void createBoardGof(int i, int size, double prob) {
-        gofBoards[i] = new GofBoard(size, size, prob);
+    private void createBoardGof(int size, double prob) {
+        gofBoard = new GofBoard(size, size, prob);
         //createDisplay();
     }
     
-    private void createBoardGcg(int i, int size, int p) {
-        gcgBoards[i] = new GcgBoard(size, size, p);
+    private void createBoardGcg(int size, int p) {
+        gcgBoard = new GcgBoard(size, size, p);
         //createDisplay();
     }
     
     private void createDisplay() {
-        display = new JavaFXDisplayDriver(gofBoards[0].getSize(), cellSizePx, gofBoards[0], gcgBoards[0]);
+        display = new JavaFXDisplayDriver(gofBoard.getSize(), cellSizePx, gofBoard, gcgBoard);
 
         baseGof.getChildren().clear();
         baseGof.getChildren().add(new Group(display.getPaneGof()));

@@ -13,7 +13,7 @@ public class Sintetizzatore {
 	private Synthesizer synthesizer;
     private final MidiChannel[] midiChannels;
     private final Instrument[] instruments;
-    private static int[] orchestra = {24, 24, 24, 24, 115};
+    private static int[] orchestra = {24, 24, 24, 24};
     
     public Sintetizzatore() {
         try {
@@ -78,7 +78,7 @@ public class Sintetizzatore {
     	int lower = 0;
     	int step = 1;
     	
-    	synthesizer.getChannels()[0].programChange(orchestra[nota.getStrumento().getStrumentIndex()]);
+    	synthesizer.getChannels()[0].programChange(orchestra[nota.getStrumento()]);
     	
     	midiChannels[0].noteOn(lower + (nota.getM()*step), 6);
     	Thread.sleep(100);
@@ -97,7 +97,7 @@ public class Sintetizzatore {
     	int lower = 0;
     	int step = 1;
     	
-    	synthesizer.getChannels()[0].programChange(orchestra[nota.getStrumento().getStrumentIndex()]);
+    	synthesizer.getChannels()[0].programChange(orchestra[nota.getStrumento()]);
     	
     	midiChannels[0].noteOn(lower + (nota.getM()*step), 6000);
     	midiChannels[0].noteOn(lower + (nota.getB()*step), 6000);
@@ -108,7 +108,7 @@ public class Sintetizzatore {
     	int lower = 0;
     	int step = 1;
     	
-    	synthesizer.getChannels()[0].programChange(orchestra[nota.getStrumento().getStrumentIndex()]);
+    	synthesizer.getChannels()[0].programChange(orchestra[nota.getStrumento()]);
     	
     	midiChannels[0].noteOff(lower + (nota.getM()*step), 6000);
     	midiChannels[0].noteOff(lower + (nota.getB()*step), 6000);
@@ -119,8 +119,7 @@ public class Sintetizzatore {
     	
     	int quartina = spartito.getQuartina();
     	
-    	//int spacing = 60000/bpm*4/quartina;
-    	int spacing = 60000/bpm/quartina;
+    	int spacing = 60000/bpm*4/quartina;
     	
     	ArrayList<ArrayList<int[]>> flow = spartito.getFlow();
     	
@@ -130,7 +129,7 @@ public class Sintetizzatore {
     			for(int j = 0; j< beat.size();j++) {
     				int array[] = beat.get(j);
     				if(array[1] != -1) {
-    			    	synthesizer.getChannels()[0].programChange(array[1]);//(orchestra[array[1]]);
+    			    	synthesizer.getChannels()[0].programChange(orchestra[array[1]]);
     			    	midiChannels[0].noteOn(array[0], 6000);
     				}
     				else
@@ -140,60 +139,5 @@ public class Sintetizzatore {
     		Thread.sleep(spacing);
     		//Thread.sleep(10);
     	}
-    }
-    
-    public void playFlow(Spartito[] spartiti, int bpm) throws InterruptedException {
-    	System.out.println("playFlow start...");
-    	//ArrayList<ArrayList<int[]>> flow = mergeSpartiti(spartiti);
-    	ArrayList<ArrayList<int[]>> flow = spartiti[0].getFlow();
-    	
-    	int quartina = spartiti[0].getQuartina();
-    	//int spacing = 60000/bpm*4/quartina;
-    	int spacing = 60000/bpm/quartina;
-    	
-    	for(int i = 0; i<flow.size();i++) {
-    		for(int k = 0; k < spartiti.length; k ++){
-	    		ArrayList<int[]> beat = spartiti[k].getFlow().get(i);
-	    		if(beat != null) {
-	    			for(int j = 0; j< beat.size();j++) {
-	    				int array[] = beat.get(j);
-	    				if(array[1] != -1) {
-	    			    	synthesizer.getChannels()[0].programChange(array[1]);//(orchestra[array[1]]);
-	    			    	midiChannels[0].noteOn(array[0], 6000);
-	    				}
-	    				else
-	    			    	midiChannels[0].noteOff(array[0], 6000);
-	    			}
-	    		}
-    		}
-    		Thread.sleep(spacing);
-    		//Thread.sleep(10);
-    	}
-    	System.out.println("playFlow end...");
-    }
-    
-    public ArrayList<ArrayList<int[]>> mergeSpartiti(Spartito[] spartiti){
-    	System.out.println("merge start...");
-    	ArrayList<ArrayList<int[]>> masterFlow = spartiti[0].getFlow();
-    	
-    	for(int k = 0; k < spartiti.length; k++){
-    		System.out.println("spartito " + k);
-	    	for(int i = 0; i < spartiti[k].getFlow().size(); i++) {
-	    		System.out.println("\t flow.get " + i);
-	    		ArrayList<int[]> beat = spartiti[k].getFlow().get(i);
-	    		if(beat != null) {
-	    			for(int j = 0; j< beat.size();j++) {
-	    				System.out.println("\t\t .get " + j);
-	    				int array[] = beat.get(j);
-	    				masterFlow.get(i).add(array);
-	    			}
-	    		}
-	    		else
-	    			System.out.println("\t\t null");
-	    	}
-    	}
-    	
-    	System.out.println("merge end...");
-    	return masterFlow;
     }
 }
