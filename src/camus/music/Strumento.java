@@ -7,6 +7,7 @@ public class Strumento {
 	private double distanzaNote;
 	private double delay;
 	private boolean sicronizzazione;
+	private int ottava;
 	
 	public Strumento(){
 		this("Strumento", 0, 1, 0, 0, true);
@@ -23,6 +24,7 @@ public class Strumento {
 		this.distanzaNote = distanzaNote;
 		this.delay = delay;
 		this.sicronizzazione = sincr;
+		this.ottava = 0;
 	}
 
 	public String getName() {
@@ -71,6 +73,14 @@ public class Strumento {
 
 	public void setSicronizzazione(boolean sicronizzazione) {
 		this.sicronizzazione = sicronizzazione;
+	}
+
+	public int getOttava() {
+		return ottava;
+	}
+
+	public void setOttava(int ottava) {
+		this.ottava = ottava;
 	}
 	
 	

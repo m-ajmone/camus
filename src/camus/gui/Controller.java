@@ -62,7 +62,7 @@ public class Controller implements Initializable {
 
     private GofBoard[] gofBoards;
     private GcgBoard[] gcgBoards;
-    int num = 4;
+    int num = 2;
     
     private JavaFXDisplayDriver display;
 
@@ -155,9 +155,9 @@ public class Controller implements Initializable {
 	    	spartiti[i].translate(i * 256);
 	    	spartiti[i].defineBeat();
     	}
-    	//spartiti[0].printFlow(1000);
+    	spartiti[0].printFlow(1000);
     	
-    	sint.playFlow(spartiti, 120);
+    	sint.playFlow(spartiti, 60);
     }
     
     @FXML

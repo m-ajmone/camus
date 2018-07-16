@@ -7,22 +7,37 @@ import camus.music.Strumento;
 import camus.core.*;
 
 public class Spartito {
-	private int reference = 50;
+	private int reference = 0;
 	private ArrayList<ArrayList<Nota>> spartito= new ArrayList<ArrayList<Nota>>();
 	private ArrayList<Strumento> orchestra = new ArrayList <Strumento>();
 	private ArrayList<ArrayList<int[]>> flow;
 	private int quartina = 64;
+	private int[] eMinorPentatonic = {28, 31, 33, 35, 38, 40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 79, 81, 83, 86, 88, 91};
 	
 	public void defineOrchestra(){
 		//Strumento(String name, int strumentIndex, int lunghezzaNota, int distanzaNote, int delay)
 		Strumento s;
-		s = new Strumento("Xylophone", 13, 0.5, 0, 0, true);
+		s = new Strumento("Fingered Bs.", 33, 2, 0, 0.2, true);
+		s.setOttava(-12);
+        orchestra.add(s);
+        s = new Strumento("Gt.Harmonics", 31, 0.7, 0, 0.2, false);
+        orchestra.add(s);
+        s.setOttava(-12);
+        s = new Strumento("Violin", 40, 4, 0, 0, false);
+        orchestra.add(s);
+		s = new Strumento("Piano 1", 1, 1, 0, 0, true);
+		orchestra.add(s);
+        s = new Strumento("Violin", 40, 4, 0, 0, false);
+        orchestra.add(s);
+        s = new Strumento("Violin", 40, 4, 0, 0, false);
+        orchestra.add(s);
+        s = new Strumento("Violin", 40, 4, 0, 0, false);
+        orchestra.add(s);
+		s = new Strumento("Xylophone", 13, 1, 0, 0, true);
 		orchestra.add(s);
 		s = new Strumento("Piano 1", 1, 1, 0, 0, true);
 		orchestra.add(s);
         s = new Strumento("Nylon-str.Gt", 24, 1.8, 0, 0.2);
-        orchestra.add(s);
-        s = new Strumento("Violin", 40, 4, 0, 0);
         orchestra.add(s);
         s = new Strumento("Taiko", 116, 1, 2, 0);
         orchestra.add(s);
@@ -31,8 +46,6 @@ public class Spartito {
         s = new Strumento("Voice Oohs", 53, 4, 1, 0);
         orchestra.add(s);
         s = new Strumento("Trumpet", 56, 2, 1, 0);
-        orchestra.add(s);
-        s = new Strumento("Gt.Harmonics", 31, 0.7, 0, 0.2, false);
         orchestra.add(s);
         
 	}
@@ -54,7 +67,19 @@ public class Spartito {
 					//reference = 40 + (int)(Math.random() * 17);
 					//newNota = new Nota(reference, width - i, j+1);
 					middle = reference + (width-i) + j+1;
-					newNota = new Nota(middle - 2, 2, 2);
+					middle = middle % eMinorPentatonic.length;
+					int bottom;
+					if(middle == 0)
+						bottom = 0;
+					else
+						bottom = middle - 1;
+					int upper;
+					if(middle == eMinorPentatonic.length - 1)
+						upper = eMinorPentatonic.length - 1;
+					else
+						upper = middle + 1;
+					int ottava = orchestra.get(strumento).getOttava();
+					newNota = new Nota(eMinorPentatonic[middle] + ottava, eMinorPentatonic[bottom] + ottava, eMinorPentatonic[upper] + ottava);
 
 					a = false;
 					if (j != 0){
@@ -136,13 +161,26 @@ public class Spartito {
 			int width = gofGrid[0].length;
 			String tm[] = new String[2];
 			Nota newNota;
-	
+			int middle;
 			for(int i=0; i < width; i++) {
 				for(int j=0; j < width; j++) {
 					if (gofGrid[i][j].getState()) {
-						reference = 40 + (int)(Math.random() * 17);
-						newNota = new Nota(reference, width - i, j+1);
-	
+						//reference = 40 + (int)(Math.random() * 17);
+						//newNota = new Nota(reference, width - i, j+1);
+						middle = reference + (width-i) + j+1;
+						middle = middle % eMinorPentatonic.length;
+						int bottom;
+						if(middle == 0)
+							bottom = 0;
+						else
+							bottom = middle - 1;
+						int upper;
+						if(middle == eMinorPentatonic.length - 1)
+							upper = eMinorPentatonic.length - 1;
+						else
+							upper = middle + 1;
+						newNota = new Nota(eMinorPentatonic[middle], eMinorPentatonic[bottom], eMinorPentatonic[upper]);
+
 						a = false;
 						if (j != 0){
 							if(gofGrid[i][j-1].getState()){
@@ -329,13 +367,13 @@ public class Spartito {
 			for(int j = 0; j < length2; j++){
 				Nota nota = spartito.get(i).get(j);
 
-				/*array = new int[2];
+				array = new int[2];
 				array[0] = nota.getB();
 				array[1] = nota.getStrumento().getStrumentIndex();
 				int startB = nota.getbStart();
 				if(flow.get(index + startB) == null)
 					flow.set(index + startB, new ArrayList<int[]>());
-				flow.get(index + startB).add(array);*/
+				flow.get(index + startB).add(array);
 
 				array = new int[2];
 				array[0] = nota.getM();
@@ -345,7 +383,7 @@ public class Spartito {
 					flow.set(index + startM, new ArrayList<int[]>());
 				flow.get(index + startM).add(array);
 
-				/*array = new int[2];
+				array = new int[2];
 				array[0] = nota.getU();
 				array[1] = nota.getStrumento().getStrumentIndex();
 				int startU = nota.getuStart();
@@ -361,7 +399,7 @@ public class Spartito {
 				if(flow.get(index + endB) == null)
 					flow.set(index + endB, new ArrayList<int[]>());
 				flow.get(index + endB).add(array);
-				max = Math.max(max, index + endB);*/
+				max = Math.max(max, index + endB);
 
 				array = new int[2];
 				array[0] = nota.getM();
@@ -372,14 +410,14 @@ public class Spartito {
 				flow.get(index + endM).add(array);
 				max = Math.max(max, index + endM);
 
-				/*array = new int[2];
+				array = new int[2];
 				array[0] = nota.getU();
 				array[1] = -1;
 				int endU = nota.getuEnd();
 				if(flow.get(index + endU) == null)
 					flow.set(index + endU, new ArrayList<int[]>());
 				flow.get(index + endU).add(array);
-				max = Math.max(max, index + endU);*/
+				max = Math.max(max, index + endU);
 				
 				if(nota.getStrumento().isSicronizzazione())
 					index = index + (quartina * 2);

@@ -16,13 +16,13 @@ public class Nota {
 	private int uStart;
 	private int uEnd;
 
-	public static final int[] crome = {1, 2, 4, 8, 16, 32, 64};
+	public static final int[] crome = {16, 32};
 
 	public Nota(int reference, int x, int y) {
 		super();
 		this.b = reference;
-		this.m = reference + x;
-		this.u = reference + x + y;
+		this.m = x;
+		this.u = y;
 	}
 
 	public Strumento getStrumento() {
@@ -35,19 +35,113 @@ public class Nota {
 
 	public void setTimeMorfology(String[] timeMorfology, int quartina){
 		this.timeMorfology = timeMorfology;
-		setTimes2(quartina);
+		if(strumento.isSicronizzazione())
+			setTimesSincrona(quartina);
+		else
+			setTimesAsincrona(quartina);
 	}
 	
-	public void setTimes2(int quartina){
+	public void setTimesAsincrona(int quartina){
+		int duration[] = new int[3];
+		duration[0] = crome[(int)(Math.random()*2)];
+		duration[1] = crome[(int)(Math.random()*2)];
+		duration[2] = crome[(int)(Math.random()*2)];
+
+		switch(timeMorfology[0]) {
+		case "B[UM]":
+			bStart = 0;
+			bEnd = duration[0];
+			mStart = duration[0];
+			uStart = mStart;
+			mEnd = duration[1];
+			uEnd = mEnd;
+			break;
+		case "[UMB]":
+			bStart = 0;
+			bEnd = duration[0];
+			mStart = bStart;
+			uStart = mStart;
+			mEnd = bEnd;
+			uEnd = mEnd;
+			break;
+		case "BUM":
+			bStart = 0;
+			bEnd = duration[0];
+			mStart = duration[1];
+			mEnd = duration[2];
+			uStart = duration[0];
+			uEnd = duration[1];
+			break;
+		case "UMB":
+			bStart = duration[1];
+			bEnd = duration[2];
+			mStart = duration[0];
+			mEnd = duration[1];
+			uStart = 0;
+			uEnd = duration[0];
+			break;
+		case "BMU":
+			bStart = 0;
+			bEnd = duration[0];
+			mStart = duration[0];
+			mEnd = duration[1];
+			uStart = duration[1];
+			uEnd = duration[2];
+			break;
+		case "UBM":
+			bStart = duration[0];
+			bEnd = duration[1];
+			mStart = duration[1];
+			mEnd = duration[2];
+			uStart = 0;
+			uEnd = duration[0];
+			break;
+		case "MBU":
+			bStart = duration[0];
+			bEnd = duration[1];
+			mStart = 0;
+			mEnd = duration[0];
+			uStart = duration[1];
+			uEnd = duration[2];
+			break;
+		case "U[MB]":
+			bStart = duration[0];
+			bEnd = duration[1];
+			mStart = duration[0];
+			mEnd = duration[1];
+			uStart = 0;
+			uEnd = duration[0];
+			break;
+		case "MUB":
+			bStart = duration[1];
+			bEnd = duration[2];
+			mStart = 0;
+			mEnd = duration[0];
+			uStart = duration[0];
+			uEnd = duration[1];
+			break;
+		case "M[UB]":
+			bStart = duration[0];
+			bEnd = duration[1];
+			mStart = 0;
+			mEnd = duration[0];
+			uStart = duration[0];
+			uEnd = duration[1];
+			break;
+		}
+
+	}
+	
+	public void setTimesSincrona(int quartina){
 		int start[] = new int[3];
 		int end[] = new int[3];
-		start[0] = (int)(crome[(int)(Math.random() * 3)] * strumento.getDelay());
-		start[1] = start[0] + (int)(crome[(int)(Math.random() * 4)] * strumento.getDelay());
-		start[2] = start[1] + (int)(crome[(int)(Math.random() * 5)] * strumento.getDelay());
+		start[0] = 0;
+		start[1] = start[0] + (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
+		start[2] = start[1] + (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
 
-		end[2] = (int)(quartina * strumento.getLunghezzaNota() * lunghezze[lunghezzaGcg]) - (int)(crome[(int)(Math.random() * 3)] * strumento.getDelay());
-		end[1] = end[2] - (int)(crome[(int)(Math.random() * 4)] * strumento.getDelay());
-		end[0] = end[1] - (int)(crome[(int)(Math.random() * 5)] * strumento.getDelay());
+		end[2] = (int)(quartina * strumento.getLunghezzaNota() * lunghezze[lunghezzaGcg]) - (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
+		end[1] = end[2] - (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
+		end[0] = end[1] - (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
 
 		
 		if(timeMorfology[0].indexOf('[') == 0){
