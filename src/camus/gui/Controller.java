@@ -101,19 +101,40 @@ public class Controller implements Initializable {
     public void defineOrchestra(){
 		//Strumento(String name, int strumentIndex, int lunghezzaNota, int distanzaNote, int delay)
     	
-    	int[] eMinorPentatonic = {28, 31, 33, 35, 38, 40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 79, 81, 83, 86, 88, 91};
+    	int[] eMinorPentatonic = {40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 76};//, 79, 81, 83, 86, 88, 91};
     	int[] gMajor = {31, 33, 35, 36, 38, 40, 42, 43, 45, 47, 48, 50, 52, 54, 55, 57, 59, 60, 62, 64, 66, 67, 69, 71, 72, 74};
+    	int[] pianoBase = {31, 33, 35, 38, 40, 42, 43, 45, 47, 48, 50, 52, 54, 55};
     	int[] scalaViolino = {50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74};
-    	int[] drums = {52};
+    	int[] drums = {40, 52, 55};
 		Strumento s;
-		s = new Strumento("Woodblock", 115, 1.8, 0, 0.2, true);
-		s.setScala(drums);
+		/*CLASSICA*/
+		s = new Strumento("Piano 1", 1, 1, 0, 0, true);
+		s.setScala(pianoBase);
+		s.setForzaOn(100);
+		orchestra.add(s);
+        s = new Strumento("Piano 1", 1, 4, 0.5, 0, false);
+        s.setForzaOn(6000);
+		orchestra.add(s);
+		
+		/*ASIATICA*/
+		s = new Strumento("Pan Flute", 75, 1.8, 0, 0.2, true);
+		s.setScala(gMajor);
+		s.setOttava(12);
         orchestra.add(s);
-        s = new Strumento("Nylon-str.Gt", 24, 1.8, 0, 0.2, false);
+        s = new Strumento("Shamisen", 106, 1.8, 0, 0.2, false);
+        orchestra.add(s);
+        
+        /*AFRICA*/
+        s = new Strumento("Woodblock", 115, 1.8, 0, 0.2, true);
+		s.setScala(drums);
         orchestra.add(s);
         s = new Strumento("Taiko", 116, 1, 32, 0, true);
         s.setScala(drums);
         orchestra.add(s);
+        s = new Strumento("Nylon-str.Gt", 24, 1.8, 0, 0.2, false);
+        orchestra.add(s);
+        
+        /*BO*/
 		s = new Strumento("Violin", 40, 4, 0, 0, false);
 		s.setScala(scalaViolino);
         orchestra.add(s);
@@ -134,10 +155,6 @@ public class Controller implements Initializable {
         s = new Strumento("Violin", 40, 4, 0, 0, false);
         orchestra.add(s);
 		s = new Strumento("Xylophone", 13, 1, 0, 0, true);
-		orchestra.add(s);
-		s = new Strumento("Piano 1", 1, 1, 0, 0, true);
-		orchestra.add(s);
-        s = new Strumento("Piano 1", 1, 4, 0.5, 0);
 		orchestra.add(s);
         s = new Strumento("Trumpet", 56, 2, 1, 0);
         orchestra.add(s);
@@ -169,12 +186,13 @@ public class Controller implements Initializable {
 				e1.printStackTrace();
 			}
         }));
-        
-        for(int j=0; j<num; j++){
-        	gofBoards[j].update();
-            display.displayBoardGof(gofBoards[j]);
-            gcgBoards[j].update();
-            display.displayBoardGcg(gcgBoards[j]);
+        for(int i = 0; i < 20; i++){
+		    for(int j=0; j<num; j++){
+		    	gofBoards[j].update();
+		        display.displayBoardGof(gofBoards[j]);
+		        gcgBoards[j].update();
+		        display.displayBoardGcg(gcgBoards[j]);
+		    }
         }
         loop.setCycleCount(100);
         loop.play();

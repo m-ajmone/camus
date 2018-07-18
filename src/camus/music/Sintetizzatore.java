@@ -81,7 +81,7 @@ public class Sintetizzatore {
     	int spacing = 60000/bpm/quartina;
     	
     	for(int i = 0; i<flow.size();i++) {
-    		System.out.print("\n" + i + "->\t");
+    		//System.out.print("\n" + i + "->\t");
     		for(int k = 0; k < spartiti.length; k ++){
 	    		ArrayList<int[]> beat = spartiti[k].getFlow().get(i);
 	    		if(beat != null) {
@@ -90,16 +90,16 @@ public class Sintetizzatore {
 	    				//if(array[1] != -1) {
 	    				if(array[0] >= 0){
 	    			    	//synthesizer.getChannels()[0].programChange(array[1]);//(orchestra[array[1]]);
-	    			    	midiChannels[array[1]].noteOn(array[0], 6000);
-	    			    	System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteON:" + array[0] + ";  ");
+	    			    	midiChannels[array[1]].noteOn(array[0], spartiti[k].getStrumento().getForzaOn());
+	    			    	//System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteON:" + array[0] + ";  ");
 	    				}
 	    				else{
-	    			    	midiChannels[array[1]].noteOff(- array[0], 6000);
-	    			    	System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteOFF:" + (-array[0]) + ";  ");
+	    			    	midiChannels[array[1]].noteOff(- array[0], spartiti[k].getStrumento().getForzaOn());
+	    			    	//System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteOFF:" + (-array[0]) + ";  ");
 	    				}
 	    			}
-	    		}else
-	    			System.out.print("X");
+	    		}//else
+	    			//System.out.print("X");
     		}
     		Thread.sleep(spacing);
     		//Thread.sleep(10);

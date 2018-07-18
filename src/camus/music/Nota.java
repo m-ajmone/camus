@@ -161,6 +161,8 @@ public class Nota {
 		bEnd = end[2];
 		mEnd = end[2];
 		uEnd = end[2];
+		b = b - 2;
+		u = u + 2;
 		/*if(timeMorfology[0].indexOf('[') == 0){
 			bStart = start[0];
 			mStart = start[0];

@@ -10,6 +10,7 @@ public class Strumento implements Comparable<Strumento> {
 	private int ottava;
 	private int orchestraIndex;
 	private int[] scala;
+	private int forzaOn;
 	
 	public Strumento(){
 		this("Strumento", 0, 1, 0, 0, true);
@@ -30,6 +31,7 @@ public class Strumento implements Comparable<Strumento> {
 		this.orchestraIndex = 0;
 		int[] s = {28, 31, 33, 35, 38, 40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 79, 81, 83, 86, 88, 91};
 		this.scala = s;
+		this.forzaOn = 1000;
 	}
 
 	public String getName() {
@@ -103,6 +105,16 @@ public class Strumento implements Comparable<Strumento> {
 	public void setScala(int[] scala) {
 		this.scala = scala;
 	}
+	
+	
+	
+	public int getForzaOn() {
+		return forzaOn;
+	}
+
+	public void setForzaOn(int forzaOn) {
+		this.forzaOn = forzaOn;
+	}
 
 	@Override
 	public int compareTo(Strumento s1) {
@@ -114,4 +126,6 @@ public class Strumento implements Comparable<Strumento> {
 			else
 				return 1;
 	}
+	
+	
 }
