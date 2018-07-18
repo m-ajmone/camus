@@ -5,7 +5,7 @@ public class Nota {
 	private int m;
 	private int u;
 	
-	private int lunghezzaGcg;
+	private int statoGcg;
 	private double[] lunghezze = {0.3, 0.5, 0.8, 1, 1.2, 1.5};
 	private String[] timeMorfology;
 	private Strumento strumento;
@@ -15,14 +15,14 @@ public class Nota {
 	private int mEnd;
 	private int uStart;
 	private int uEnd;
-
-	public static final int[] crome = {16, 32};
-
-	public Nota(int reference, int x, int y) {
+	
+	public static final int[] crome = {8, 8, 16, 16, 32, 32, 64, 64};
+	
+	public Nota(int reference, int b, int u) {
 		super();
-		this.b = reference;
-		this.m = x;
-		this.u = y;
+		this.b = b;
+		this.m = reference;
+		this.u = u;
 	}
 
 	public Strumento getStrumento() {
@@ -43,26 +43,29 @@ public class Nota {
 	
 	public void setTimesAsincrona(int quartina){
 		int duration[] = new int[3];
-		duration[0] = crome[(int)(Math.random()*2)];
-		duration[1] = crome[(int)(Math.random()*2)];
-		duration[2] = crome[(int)(Math.random()*2)];
+		duration[0] = crome[(int)(statoGcg % crome.length)]; //crome[(int)(Math.random()*2)];
+		duration[1] = duration[0] + crome[(int)(statoGcg % crome.length)]; //duration[0] + crome[(int)(Math.random()*2)];
+		duration[2] = duration[1] + crome[(int)(statoGcg % crome.length)]; //duration[1] + crome[(int)(Math.random()*2)];
 
 		switch(timeMorfology[0]) {
 		case "B[UM]":
 			bStart = 0;
 			bEnd = duration[0];
 			mStart = duration[0];
-			uStart = mStart;
 			mEnd = duration[1];
+			uStart = mStart;
 			uEnd = mEnd;
+			u = u + 2;
 			break;
 		case "[UMB]":
 			bStart = 0;
 			bEnd = duration[0];
 			mStart = bStart;
-			uStart = mStart;
 			mEnd = bEnd;
+			uStart = mStart;
 			uEnd = mEnd;
+			u = u + 2;
+			b = b - 2;
 			break;
 		case "BUM":
 			bStart = 0;
@@ -107,10 +110,11 @@ public class Nota {
 		case "U[MB]":
 			bStart = duration[0];
 			bEnd = duration[1];
-			mStart = duration[0];
-			mEnd = duration[1];
+			mStart = bStart;
+			mEnd = bEnd;
 			uStart = 0;
 			uEnd = duration[0];
+			b = b - 2;
 			break;
 		case "MUB":
 			bStart = duration[1];
@@ -128,6 +132,14 @@ public class Nota {
 			uStart = duration[0];
 			uEnd = duration[1];
 			break;
+		default:
+			bStart = duration[0];
+			bEnd = duration[1];
+			mStart = bStart;
+			mEnd = bEnd;
+			uStart = mStart;
+			uEnd = mEnd;
+			break;
 		}
 
 	}
@@ -135,16 +147,21 @@ public class Nota {
 	public void setTimesSincrona(int quartina){
 		int start[] = new int[3];
 		int end[] = new int[3];
-		start[0] = 0;
+		start[0] = (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
 		start[1] = start[0] + (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
 		start[2] = start[1] + (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
 
-		end[2] = (int)(quartina * strumento.getLunghezzaNota() * lunghezze[lunghezzaGcg]) - (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
+		end[2] = (int)(quartina * strumento.getLunghezzaNota() * lunghezze[statoGcg]) - (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
 		end[1] = end[2] - (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
 		end[0] = end[1] - (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
-
 		
-		if(timeMorfology[0].indexOf('[') == 0){
+		bStart = start[0];
+		mStart = start[0];
+		uStart = start[0];
+		bEnd = end[2];
+		mEnd = end[2];
+		uEnd = end[2];
+		/*if(timeMorfology[0].indexOf('[') == 0){
 			bStart = start[0];
 			mStart = start[0];
 			uStart = start[0];
@@ -208,7 +225,7 @@ public class Nota {
 					mEnd = end[i];
 				}
 			}
-		}
+		}*/
 	}
 	
 	public void setTimes(int quartina){
@@ -356,12 +373,12 @@ public class Nota {
 		this.uEnd = uEnd;
 	}
 
-	public int getLunghezzaGcg() {
-		return lunghezzaGcg;
+	public int getStatoGcg() {
+		return statoGcg;
 	}
 
-	public void setLunghezzaGcg(int lunghezzaGcg) {
-		this.lunghezzaGcg = lunghezzaGcg;
+	public void setStatoGcg(int lunghezzaGcg) {
+		this.statoGcg = lunghezzaGcg;
 	}
 	
 	

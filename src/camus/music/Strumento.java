@@ -1,6 +1,6 @@
 package camus.music;
 
-public class Strumento {
+public class Strumento implements Comparable<Strumento> {
 	private String name;
 	private int strumentIndex;
 	private double lunghezzaNota;
@@ -8,12 +8,14 @@ public class Strumento {
 	private double delay;
 	private boolean sicronizzazione;
 	private int ottava;
+	private int orchestraIndex;
+	private int[] scala;
 	
 	public Strumento(){
 		this("Strumento", 0, 1, 0, 0, true);
 	}
 	
-	public Strumento(String name, int strumentIndex, double lunghezzaNota, double distanzaNote, double delay){
+	public Strumento(String name,int strumentIndex, double lunghezzaNota, double distanzaNote, double delay){
 		this(name, strumentIndex, lunghezzaNota, distanzaNote, delay, true);
 	}
 	
@@ -25,6 +27,9 @@ public class Strumento {
 		this.delay = delay;
 		this.sicronizzazione = sincr;
 		this.ottava = 0;
+		this.orchestraIndex = 0;
+		int[] s = {28, 31, 33, 35, 38, 40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 79, 81, 83, 86, 88, 91};
+		this.scala = s;
 	}
 
 	public String getName() {
@@ -83,5 +88,30 @@ public class Strumento {
 		this.ottava = ottava;
 	}
 	
+	public int getOrchestraIndex() {
+		return orchestraIndex;
+	}
+
+	public void setOrchestraIndex(int orchestraIndex) {
+		this.orchestraIndex = orchestraIndex;
+	}
 	
+	public int[] getScala() {
+		return scala;
+	}
+
+	public void setScala(int[] scala) {
+		this.scala = scala;
+	}
+
+	@Override
+	public int compareTo(Strumento s1) {
+		if( orchestraIndex < s1.getOrchestraIndex())
+			return -1;
+		else
+			if(orchestraIndex == s1.getOrchestraIndex())
+				return 0;
+			else
+				return 1;
+	}
 }

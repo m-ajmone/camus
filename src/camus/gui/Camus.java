@@ -18,7 +18,7 @@ public class Camus extends Application {
         primaryStage.setScene(new Scene(parent));
         primaryStage.show();
     }
-
+    
     public static void main(String[] args) {
         launch(args);
     }
