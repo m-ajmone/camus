@@ -7,6 +7,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javax.sound.midi.InvalidMidiDataException;
+
 import camus.music.Nota;
 import camus.music.Sintetizzatore;
 import camus.music.Spartito;
@@ -87,7 +89,15 @@ public class Controller implements Initializable {
     	gcgBoards = new GcgBoard[num];
     	spartiti = new Spartito[num];
     	defineOrchestra();
-    	sint = new Sintetizzatore(orchestra);
+    	try {
+			sint = new Sintetizzatore(orchestra);
+		} catch (InvalidMidiDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     	for(int i = 0; i < num; i++){
     		createBoardGof(i, DEFAULT_SIZE, DEFAULT_PROB);

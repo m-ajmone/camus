@@ -1,9 +1,12 @@
 package camus.music;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.sound.midi.Instrument;
+import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
@@ -15,7 +18,7 @@ public class Sintetizzatore {
     private final MidiChannel[] midiChannels;
     private final Instrument[] instruments;
     
-    public Sintetizzatore(ArrayList<Strumento> orchestra) {
+    public Sintetizzatore(ArrayList<Strumento> orchestra) throws InvalidMidiDataException, Exception {
         try {
             synthesizer = MidiSystem.getSynthesizer();
             synthesizer.open();
@@ -25,12 +28,16 @@ public class Sintetizzatore {
         }   
         
         this.midiChannels = synthesizer.getChannels();
+       // \camus\gui
+        //\src
+        File f = new File(".\\src\\fluid.sf2");
+        Soundbank bank = MidiSystem.getSoundbank(f);
         
-        Soundbank bank = synthesizer.getDefaultSoundbank();
+        //Soundbank bank = synthesizer.getDefaultSoundbank();
         
         synthesizer.loadAllInstruments(bank);
-        
-        this.instruments = synthesizer.getAvailableInstruments();
+
+        this.instruments = synthesizer.getLoadedInstruments();
         synthesizer.loadAllInstruments(synthesizer.getDefaultSoundbank());
         
         orchestra.sort(null);
