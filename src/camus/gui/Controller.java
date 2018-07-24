@@ -113,15 +113,40 @@ public class Controller implements Initializable {
     	
     	int[][] eMinorPentatonic = {{40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 76}};//, 79, 81, 83, 86, 88, 91};
     	
+    	//GO WELL TOGETHER
     	int[][] cMajor = {{48, 50, 52, 53, 55, 57, 59, 60}};
     	int[][] armonyC = { {36, 40, 43}, {38, 41, 45}, {40, 43, 47}, {41, 45, 48}, {43, 47, 50}, {45, 48, 52}, {47, 50, 53}};
-    	
     	int[][] aMinorPentatonic = {{45, 48, 50, 52, 55, 57, 60, 62, 67, 69}};
+    	
+    	//GO WELL TOGETHER
+    	int[][] aMinScale = {{45, 47, 48, 50, 52, 53, 56}};
+    	int[][] aMinArmony = {{33, 36, 40}, {35, 38, 41}, {36, 40, 44}, {38, 41, 45}, {40, 44, 47}, {41, 45, 48}, {44, 47, 50}};
     	
     	//int[] pianoBase = {/*31, 33, 35,*/ 38, 40, 42, 43, 45, 47, 48, 50, 52, 54, 55};
     	int[][] scalaViolino = {{50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74}};
     	int[][] drums = {{60}};
 		Strumento s;
+		
+		/*FLAMENCO*/
+		s = new Strumento("pistola", 128, 1, 0, 0, true);
+		s.setScala(drums);
+		s.setForzaOn(100);
+		s.setIndex(64);
+		orchestra.add(s);
+		
+		s = new Strumento("Piano 1", 1, 1, 0, 0, true);
+		s.setScala(aMinArmony);
+		s.setForzaOn(500);
+		s.setOttava(12);
+		s.setIndex(128);
+		orchestra.add(s);
+		s = new Strumento("Piano 1", 1, 4, 0, 0, false);    
+		s.setScala(aMinScale);
+		//s.setScala(aMinorPentatonic);
+        s.setForzaOn(500);
+        s.setOttava(24);
+		orchestra.add(s);
+
 		
 		/*CLASSICA*/
 		s = new Strumento("pistola", 128, 1, 0, 0, true);
@@ -136,8 +161,9 @@ public class Controller implements Initializable {
 		s.setOttava(12);
 		s.setIndex(128);
 		orchestra.add(s);
-		s = new Strumento("Violin", 1, 4, 0, 0, false);       
-		s.setScala(aMinorPentatonic);
+		s = new Strumento("Violin", 1, 4, 0, 0, false);    
+		s.setScala(cMajor);
+		//s.setScala(aMinorPentatonic);
         s.setForzaOn(500);
         s.setOttava(12);
 		orchestra.add(s);
@@ -145,7 +171,9 @@ public class Controller implements Initializable {
         s.setForzaOn(500);
         s.setOttava(3);
 		orchestra.add(s);
-
+		
+		
+		
 		/*AFRICA*/
         s = new Strumento("Woodblock", 115, 1.8, 0, 0.2, true);
 		s.setScala(drums);
@@ -264,7 +292,7 @@ public class Controller implements Initializable {
     	//spartiti[0].printFlow(1000);
     	//spartiti[1].printFlow(1000);
     	
-    	sint.playFlow(spartiti, 60);
+    	sint.playFlow(spartiti, 100);
     }
     
     @FXML
