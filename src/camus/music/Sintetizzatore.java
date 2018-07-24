@@ -30,7 +30,7 @@ public class Sintetizzatore {
         this.midiChannels = synthesizer.getChannels();
        // \camus\gui
         //\src
-        File f = new File(".\\src\\fluid.sf2");
+        File f = new File(System.getProperty("user.dir") + "//src//fluid.sf2");
         Soundbank bank = MidiSystem.getSoundbank(f);
         
         //Soundbank bank = synthesizer.getDefaultSoundbank();
@@ -88,7 +88,7 @@ public class Sintetizzatore {
     	int spacing = 60000/bpm/quartina;
     	
     	for(int i = 0; i<flow.size();i++) {
-    		//System.out.print("\n" + i + "->\t");
+    		System.out.print("\n" + i + "->\t");
     		for(int k = 0; k < spartiti.length; k ++){
 	    		ArrayList<int[]> beat = spartiti[k].getFlow().get(i);
 	    		if(beat != null) {
@@ -98,15 +98,15 @@ public class Sintetizzatore {
 	    				if(array[0] >= 0){
 	    			    	//synthesizer.getChannels()[0].programChange(array[1]);//(orchestra[array[1]]);
 	    			    	midiChannels[array[1]].noteOn(array[0], spartiti[k].getStrumento().getForzaOn());
-	    			    	//System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteON:" + array[0] + ";  ");
+	    			    	System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteON:" + array[0] + ";  ");
 	    				}
 	    				else{
 	    			    	midiChannels[array[1]].noteOff(- array[0], spartiti[k].getStrumento().getForzaOn());
-	    			    	//System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteOFF:" + (-array[0]) + ";  ");
+	    			    	System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteOFF:" + (-array[0]) + ";  ");
 	    				}
 	    			}
-	    		}//else
-	    			//System.out.print("X");
+	    		}else
+	    			System.out.print("X");
     		}
     		Thread.sleep(spacing);
     		//Thread.sleep(10);

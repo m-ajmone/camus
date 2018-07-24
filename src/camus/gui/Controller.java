@@ -64,7 +64,7 @@ public class Controller implements Initializable {
 
     private GofBoard[] gofBoards;
     private GcgBoard[] gcgBoards;
-    int num = 2;
+    int num = 3;
     
     private JavaFXDisplayDriver display;
 
@@ -111,41 +111,62 @@ public class Controller implements Initializable {
     public void defineOrchestra(){
 		//Strumento(String name, int strumentIndex, int lunghezzaNota, int distanzaNote, int delay)
     	
-    	int[] eMinorPentatonic = {40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 76};//, 79, 81, 83, 86, 88, 91};
-    	int[] gMajor = {31, 33, 35, 36, 38, 40, 42, 43, 45, 47, 48, 50, 52, 54, 55, 57, 59, 60, 62, 64, 66, 67, 69, 71, 72, 74};
-    	int[] pianoBase = {31, 33, 35, 38, 40, 42, 43, 45, 47, 48, 50, 52, 54, 55};
-    	int[] scalaViolino = {50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74};
-    	int[] drums = {40, 52, 55};
+    	int[][] eMinorPentatonic = {{40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 76}};//, 79, 81, 83, 86, 88, 91};
+    	
+    	int[][] cMajor = {{48, 50, 52, 53, 55, 57, 59, 60}};
+    	int[][] armonyC = { {36, 40, 43}, {38, 41, 45}, {40, 43, 47}, {41, 45, 48}, {43, 47, 50}, {45, 48, 52}, {47, 50, 53}};
+    	
+    	int[][] aMinorPentatonic = {{45, 48, 50, 52, 55, 57, 60, 62, 67, 69}};
+    	
+    	//int[] pianoBase = {/*31, 33, 35,*/ 38, 40, 42, 43, 45, 47, 48, 50, 52, 54, 55};
+    	int[][] scalaViolino = {{50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74}};
+    	int[][] drums = {{60}};
 		Strumento s;
+		
 		/*CLASSICA*/
-		s = new Strumento("Piano 1", 1, 1, 0, 0, true);
-		s.setScala(pianoBase);
+		s = new Strumento("pistola", 128, 1, 0, 0, true);
+		s.setScala(drums);
 		s.setForzaOn(100);
-		orchestra.add(s);
-        s = new Strumento("Piano 1", 1, 4, 0.5, 0, false);
-        s.setForzaOn(6000);
+		s.setIndex(64);
 		orchestra.add(s);
 		
+		s = new Strumento("Piano 1", 1, 1, 0, 0, true);
+		s.setScala(armonyC);
+		s.setForzaOn(500);
+		s.setOttava(12);
+		s.setIndex(128);
+		orchestra.add(s);
+		s = new Strumento("Violin", 1, 4, 0, 0, false);       
+		s.setScala(aMinorPentatonic);
+        s.setForzaOn(500);
+        s.setOttava(12);
+		orchestra.add(s);
+        s = new Strumento("Piano 1", 1, 4, 0.5, 0, false);
+        s.setForzaOn(500);
+        s.setOttava(3);
+		orchestra.add(s);
+
+		/*AFRICA*/
+        s = new Strumento("Woodblock", 115, 1.8, 0, 0.2, true);
+		s.setScala(drums);
+        orchestra.add(s);
+        s = new Strumento("Taiko", 116, 1, 0, 0, false);
+        s.setScala(eMinorPentatonic);
+        orchestra.add(s);
+        s = new Strumento("Nylon-str.Gt", 24, 1.8, 0, 0.2, false);
+        orchestra.add(s);
+        
 		/*ASIATICA*/
 		s = new Strumento("Pan Flute", 75, 1.8, 0, 0.2, true);
-		s.setScala(gMajor);
+		s.setScala(cMajor);
 		s.setOttava(12);
         orchestra.add(s);
         s = new Strumento("Shamisen", 106, 1.8, 0, 0.2, false);
         orchestra.add(s);
         
-        /*AFRICA*/
-        s = new Strumento("Woodblock", 115, 1.8, 0, 0.2, true);
-		s.setScala(drums);
-        orchestra.add(s);
-        s = new Strumento("Taiko", 116, 1, 32, 0, true);
-        s.setScala(drums);
-        orchestra.add(s);
-        s = new Strumento("Nylon-str.Gt", 24, 1.8, 0, 0.2, false);
-        orchestra.add(s);
-        
         /*BO*/
-		s = new Strumento("Violin", 40, 4, 0, 0, false);
+        s = new Strumento("Piano 1", 1, 1, 0, 0, true);
+		
 		s.setScala(scalaViolino);
         orchestra.add(s);
 		s = new Strumento("Fingered Bs.", 33, 2, 0, 0.2, true);
@@ -228,11 +249,18 @@ public class Controller implements Initializable {
     private void onRandomize(Event evt) throws InterruptedException {
         /*createBoardGof(DEFAULT_SIZE, (double) countSlider.getValue()/100);
         createBoardGcg(DEFAULT_SIZE, 10);*/
-    	spartiti[0].translate(0);
+    	spartiti[0].translate(0,99999);
+    	spartiti[1].translate(0,99999);
+    	spartiti[2].translate(0,99999);
     	//spartiti[0].defineBeat();
-    	for(int i = 1; i < num ; i++){
-	    	spartiti[i].translate(i * 256);
+    	int inizio = 256;
+    	int fine = 2560;
+    	for(int i = 3; i < num ; i++){
+	    	spartiti[i].translate(inizio,fine);
+	    	inizio = fine;
+	    	fine  = fine + 2560;
     	}
+    	
     	//spartiti[0].printFlow(1000);
     	//spartiti[1].printFlow(1000);
     	

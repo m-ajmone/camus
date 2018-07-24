@@ -6,10 +6,11 @@ public class Strumento implements Comparable<Strumento> {
 	private double lunghezzaNota;
 	private double distanzaNote;
 	private double delay;
+	private int index;
 	private boolean sicronizzazione;
 	private int ottava;
 	private int orchestraIndex;
-	private int[] scala;
+	private int[][] scala;
 	private int forzaOn;
 	
 	public Strumento(){
@@ -29,9 +30,10 @@ public class Strumento implements Comparable<Strumento> {
 		this.sicronizzazione = sincr;
 		this.ottava = 0;
 		this.orchestraIndex = 0;
-		int[] s = {28, 31, 33, 35, 38, 40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 79, 81, 83, 86, 88, 91};
+		int[][] s = {{28, 31, 33, 35, 38, 40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 79, 81, 83, 86, 88, 91}};
 		this.scala = s;
 		this.forzaOn = 1000;
+		this.index = 0;
 	}
 
 	public String getName() {
@@ -98,16 +100,24 @@ public class Strumento implements Comparable<Strumento> {
 		this.orchestraIndex = orchestraIndex;
 	}
 	
-	public int[] getScala() {
+	public int[][] getScala() {
 		return scala;
 	}
 
-	public void setScala(int[] scala) {
+	public void setScala(int[][] scala) {
 		this.scala = scala;
 	}
 	
 	
 	
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
 	public int getForzaOn() {
 		return forzaOn;
 	}

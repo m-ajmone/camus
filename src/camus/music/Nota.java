@@ -15,9 +15,11 @@ public class Nota {
 	private int mEnd;
 	private int uStart;
 	private int uEnd;
+
+	//public static final int[] crome = {8, 8, 16, 16, 32, 32, 64, 64};
 	
-	public static final int[] crome = {8, 8, 16, 16, 32, 32, 64, 64};
-	
+	public static final int[] crome = {16,16,32,32,64,64};
+
 	public Nota(int reference, int b, int u) {
 		super();
 		this.b = b;
@@ -55,7 +57,7 @@ public class Nota {
 			mEnd = duration[1];
 			uStart = mStart;
 			uEnd = mEnd;
-			u = u + 2;
+			//u = u +2;
 			break;
 		case "[UMB]":
 			bStart = 0;
@@ -64,8 +66,8 @@ public class Nota {
 			mEnd = bEnd;
 			uStart = mStart;
 			uEnd = mEnd;
-			u = u + 2;
-			b = b - 2;
+			//u = u + 2;
+			//b = b - 2;
 			break;
 		case "BUM":
 			bStart = 0;
@@ -114,7 +116,7 @@ public class Nota {
 			mEnd = bEnd;
 			uStart = 0;
 			uEnd = duration[0];
-			b = b - 2;
+			//b = b - 2;
 			break;
 		case "MUB":
 			bStart = duration[1];
@@ -161,8 +163,10 @@ public class Nota {
 		bEnd = end[2];
 		mEnd = end[2];
 		uEnd = end[2];
-		b = b - 2;
-		u = u + 2;
+		//b = b - 2;
+		//u = u + 2;
+		
+		
 		/*if(timeMorfology[0].indexOf('[') == 0){
 			bStart = start[0];
 			mStart = start[0];
@@ -381,6 +385,18 @@ public class Nota {
 
 	public void setStatoGcg(int lunghezzaGcg) {
 		this.statoGcg = lunghezzaGcg;
+	}
+
+	public void setB(int b) {
+		this.b = b;
+	}
+
+	public void setM(int m) {
+		this.m = m;
+	}
+
+	public void setU(int u) {
+		this.u = u;
 	}
 	
 	

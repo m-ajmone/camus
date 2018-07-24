@@ -34,21 +34,28 @@ public class Spartito {
 					//reference = 40 + (int)(Math.random() * 17);
 					//newNota = new Nota(reference, width - i, j+1);
 					middle = reference + (width-i) + j+1;
-					middle = middle % strumento.getScala().length;
-					int bottom;
-					if(middle == 0)// || middle == 1)
-						bottom = 0;
-					else
-						bottom = middle - 1;
-					int upper;
-					if(middle == strumento.getScala().length - 1)// || middle == strumento.getScala().length - 2)
-						upper = strumento.getScala().length - 1;
-					else
-						upper = middle + 1;
 					int ottava = strumento.getOttava();
-					
-					newNota = new Nota(strumento.getScala()[middle] + ottava, strumento.getScala()[bottom] + ottava, strumento.getScala()[upper] + ottava);
-					
+					if(strumento.getScala().length == 1) {
+						middle = middle % strumento.getScala()[0].length;
+						int bottom;
+						int upper;
+						/*if(middle == 0)// || middle == 1)
+							bottom = 0;
+						else
+							bottom = middle - 1;
+						if(middle == strumento.getScala()[0].length - 1)// || middle == strumento.getScala().length - 2)
+							upper = strumento.getScala()[0].length - 1;
+						else
+							upper = middle + 1;
+						*/
+						bottom = (middle + (width-i)) % strumento.getScala()[0].length;
+						upper = (middle + j+1) % strumento.getScala()[0].length;
+						newNota = new Nota(strumento.getScala()[0][middle] + ottava, strumento.getScala()[0][bottom] + ottava, strumento.getScala()[0][upper] + ottava);
+					}else {
+						middle = middle % strumento.getScala().length;
+						newNota = new Nota(strumento.getScala()[middle][0] + ottava, strumento.getScala()[middle][1] + ottava, strumento.getScala()[middle][2] + ottava);
+					}
+						
 					a = false;
 					if (j != 0){
 						if(gofGrid[i][j-1].getState()){
@@ -244,10 +251,12 @@ public class Spartito {
 
 		switch(tgg) {
 		case "0000":
-			timeMorph[0] = "B[UM]";
+			//timeMorph[0] = "B[UM]";
+			timeMorph[0] = "UMB";
 			break;
 		case "0001":
-			timeMorph[0] = "[UMB]";
+			//timeMorph[0] = "[UMB]";
+			timeMorph[0] = "BUM";
 			break;
 		case "0010":
 			timeMorph[0] = "BUM";
@@ -265,13 +274,15 @@ public class Spartito {
 			timeMorph[0] = "MBU";
 			break;
 		case "1001":
-			timeMorph[0] = "U[MB]";
+			//timeMorph[0] = "U[MB]";
+			timeMorph[0] = "MBU";
 			break;
 		case "1011":
 			timeMorph[0] = "MUB";
 			break;
 		case "1111":
-			timeMorph[0] = "M[UB]";
+			//timeMorph[0] = "M[UB]";
+			timeMorph[0] = "MUB";
 			break;
 
 		}
@@ -320,14 +331,14 @@ public class Spartito {
 		return sum;
 	}
 
-	public void translate(int index){
+	public void translate(int index, int fine){
 		if(strumento.isSicronizzazione())
-			translateSincrona(index);
+			translateSincrona(index, fine);
 		else
-			translateAsincrona(index);
+			translateAsincrona(index, fine);
 	}
 	
-	public void translateSincrona(int index){
+	public void translateSincrona(int index, int fine){
 		int flowSize = getSpartitoSize() * (quartina * 10);
 		flow = new ArrayList<ArrayList<int[]>>();
 		
@@ -339,9 +350,11 @@ public class Spartito {
 		int length1 = spartito.size();
 		for(int i = 0; i < length1; i++){
 			int length2 = spartito.get(i).size();
+			if(index > fine)
+				break;
 			for(int j = 0; j < length2; j++){
 				Nota nota = spartito.get(i).get(j);
-
+				
 				array = new int[2];
 				array[0] = nota.getB();
 				//array[1] = nota.getStrumento().getStrumentIndex();
@@ -400,12 +413,16 @@ public class Spartito {
 				flow.get(index + endU).add(array);
 				max = Math.max(max, index + endU);
 				
-				index = index + (int)(quartina);
+				//index = index + (int)(quartina);
+				index = index + strumento.getIndex();
+				
+				if(index > fine)
+					break;
 			}
 		}
 	}
 	
-	public void translateAsincrona(int index){
+	public void translateAsincrona(int index,int fine){
 		int flowSize = getSpartitoSize() * (quartina * 10);
 		flow = new ArrayList<ArrayList<int[]>>();
 		
@@ -417,6 +434,8 @@ public class Spartito {
 		int length1 = spartito.size();
 		for(int i = 0; i < length1; i++){
 			int length2 = spartito.get(i).size();
+			if(index > fine)
+				break;
 			for(int j = 0; j < length2; j++){
 				Nota nota = spartito.get(i).get(j);
 
@@ -482,7 +501,8 @@ public class Spartito {
 				int resto = index % (quartina);
 				if(resto >= (quartina) - 8)
 					index = max + (quartina - resto);
-				
+				if(index > fine)
+					break;
 			}
 		}
 	}
