@@ -30,7 +30,19 @@ public class GofBoard {
             }
         }
     }
-
+    
+    public GofBoard(GofBoard gofBoard){
+    	this.height = gofBoard.getSize();
+        this.width = gofBoard.getSize();
+        int size = gofBoard.getGrid().length;
+    	this.grid = new GofCell[size][size];
+    	for(int i = 0; i < size; i++){
+    		for(int j = 0; j < size; j++){
+    			this.grid[i][j] = new GofCell(gofBoard.getGrid()[i][j].getState());
+    		}
+    	}
+    }
+    
     public GofCell[][] getGrid() {
         return grid;
     }

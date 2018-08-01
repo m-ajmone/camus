@@ -38,7 +38,19 @@ public class GcgBoard {
             }
         }
     }
-
+    
+    public GcgBoard(GcgBoard cgcBoard){
+    	this.height = cgcBoard.getSize();
+    	this.width = cgcBoard.getSize();
+    	int size = cgcBoard.getGrid().length;
+    	this.grid = new GcgCell[size][size];
+    	for(int i = 0; i < size; i++){
+    		for(int j = 0; j < size; j++){
+    			this.grid[i][j] = new GcgCell(cgcBoard.getGrid()[i][j].getState());
+    		}
+    	}
+    }
+    
     public GcgCell[][] getGrid() {
         return grid;
     }

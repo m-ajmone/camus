@@ -11,16 +11,104 @@
 
 <HBox fx:id="rootBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camus.gui.Controller">
    <children>
-      <FlowPane fx:id="baseGof" prefHeight="475.0" prefWidth="475.0">
-         <HBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </HBox.margin>
-      </FlowPane>
-      <FlowPane fx:id="baseGcg" prefHeight="475.0" prefWidth="475.0">
-         <HBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </HBox.margin>
-      </FlowPane>
+   	  <VBox fx:id="boards" prefHeight="477.0" prefWidth="760.0">
+   	  	  <HBox fx:id="strumento1">
+   	  	  	 <HBox prefHeight="475.0" prefWidth="475.0">
+                 <children>
+                    <Label fx:id="strumentoLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="196.0" text="STRUMENTO 1" textAlignment="CENTER">
+	                    <HBox.margin>
+				            <Insets bottom="10.0" left="0.0" right="10.0" top="10.0" />
+				         </HBox.margin>
+	                    <font>
+	                        <Font size="19.0" />
+	                     </font>
+                     </Label>
+                 </children>
+              </HBox>
+		      <FlowPane fx:id="baseGof" prefHeight="475.0" prefWidth="475.0">
+		         <HBox.margin>
+		            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+		         </HBox.margin>
+		      </FlowPane>
+		      <FlowPane fx:id="baseGcg" prefHeight="475.0" prefWidth="475.0">
+		         <HBox.margin>
+		            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+		         </HBox.margin>
+		      </FlowPane>
+	      </HBox>
+	      <HBox fx:id="strumento2">
+	      	  <HBox prefHeight="475.0" prefWidth="475.0">
+                 <children>
+                    <Label fx:id="strumento1Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="196.0" text="STRUMENTO 2" textAlignment="CENTER">
+	                    <HBox.margin>
+				            <Insets bottom="10.0" left="0.0" right="10.0" top="10.0" />
+				         </HBox.margin>
+	                    <font>
+	                        <Font size="19.0" />
+	                     </font>
+                     </Label>
+                 </children>
+              </HBox>
+		      <FlowPane fx:id="baseGof1" prefHeight="475.0" prefWidth="475.0">
+		         <HBox.margin>
+		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		         </HBox.margin>
+		      </FlowPane>
+		      <FlowPane fx:id="baseGcg1" prefHeight="475.0" prefWidth="475.0">
+		         <HBox.margin>
+		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		         </HBox.margin>
+		      </FlowPane>
+	      </HBox>
+	      <HBox fx:id="strumento2">
+	      	  <HBox prefHeight="475.0" prefWidth="475.0">
+                 <children>
+                    <Label fx:id="strumento2Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="196.0" text="STRUMENTO 2" textAlignment="CENTER">
+	                    <HBox.margin>
+				            <Insets bottom="10.0" left="0.0" right="10.0" top="10.0" />
+				         </HBox.margin>
+	                    <font>
+	                        <Font size="19.0" />
+	                     </font>
+                     </Label>
+                 </children>
+              </HBox>
+		      <FlowPane fx:id="baseGof2" prefHeight="475.0" prefWidth="475.0">
+		         <HBox.margin>
+		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		         </HBox.margin>
+		      </FlowPane>
+		      <FlowPane fx:id="baseGcg2" prefHeight="475.0" prefWidth="475.0">
+		         <HBox.margin>
+		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		         </HBox.margin>
+		      </FlowPane>
+	      </HBox>
+	      <HBox fx:id="strumento2">
+	      	  <HBox prefHeight="475.0" prefWidth="475.0">
+                 <children>
+                    <Label fx:id="strumento3Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="196.0" text="STRUMENTO 2" textAlignment="CENTER">
+	                    <HBox.margin>
+				            <Insets bottom="10.0" left="0.0" right="10.0" top="10.0" />
+				         </HBox.margin>
+	                    <font>
+	                        <Font size="19.0" />
+	                     </font>
+                     </Label>
+                 </children>
+              </HBox>
+		      <FlowPane fx:id="baseGof3" prefHeight="475.0" prefWidth="475.0">
+		         <HBox.margin>
+		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		         </HBox.margin>
+		      </FlowPane>
+		      <FlowPane fx:id="baseGcg3" prefHeight="475.0" prefWidth="475.0">
+		         <HBox.margin>
+		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		         </HBox.margin>
+		      </FlowPane>
+	      </HBox>
+      </VBox>
       <VBox fx:id="sidebar" prefHeight="477.0" prefWidth="218.0">
          <children>
             <TextFlow prefHeight="59.0" prefWidth="195.0">
@@ -28,7 +116,7 @@
                   <Insets top="20.0" />
                </opaqueInsets>
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="196.0" text="CAMUS" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="196.0" text="CAMUS 2.0" textAlignment="CENTER">
                      <font>
                         <Font size="29.0" />
                      </font>
@@ -135,16 +223,16 @@
             </VBox>
             <BorderPane prefHeight="33.0" prefWidth="195.0">
                <center>
-                  <Button fx:id="randomizeButton" mnemonicParsing="false" onAction="#onRandomize" text="Play" BorderPane.alignment="CENTER" />
+                  <Button fx:id="playButton" mnemonicParsing="false" onAction="#onPlay" text="Play" BorderPane.alignment="CENTER" />
                </center>
                <right>
-                  <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" text="Clear" BorderPane.alignment="CENTER" />
+                  <Button fx:id="stopMusicButton" mnemonicParsing="false" onAction="#onStopMusic" text="Stop Music" BorderPane.alignment="CENTER" />
                </right>
                <top>
                   <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
                </top>
                <left>
-                  <Label text="Board:" BorderPane.alignment="CENTER" />
+                  <Label text="Music:" BorderPane.alignment="CENTER" />
                </left>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

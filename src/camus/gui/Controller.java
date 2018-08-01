@@ -50,6 +50,26 @@ public class Controller implements Initializable {
     @FXML
     private FlowPane baseGcg;
     @FXML
+    private FlowPane baseGof1;
+    @FXML
+    private FlowPane baseGcg1;
+    @FXML
+    private FlowPane baseGof2;
+    @FXML
+    private FlowPane baseGcg2;
+    @FXML
+    private FlowPane baseGof3;
+    @FXML
+    private FlowPane baseGcg3;
+    @FXML
+    private Label strumentoLabel;
+    @FXML
+    private Label strumento1Label;
+    @FXML
+    private Label strumento2Label;
+    @FXML
+    private Label strumento3Label;
+    @FXML
     private Label countLabel;
     @FXML
     private Slider countSlider;
@@ -58,17 +78,22 @@ public class Controller implements Initializable {
     @FXML
     private Button openButton, saveButton, openPresetBtn;
     @FXML
-    private Button runButton, stopButton, randomizeButton, clearButton;
+    private Button runButton, stopButton, playButton, stopMusicButton;
     @FXML
     private HBox rootBox;
 
     private GofBoard[] gofBoards;
     private GcgBoard[] gcgBoards;
-    int num = 3;
+
+    private GofBoard[] gofBoardsInitial;
+    private GcgBoard[] gcgBoardsInitial;
+    int num = 4;
     
     private JavaFXDisplayDriver display;
 
     private Timeline loop = null;
+    private Timeline loopMusic = null;
+    private int time = 0;
     
     private int windowWidth = 750;
     private int cellSizePx = 5;
@@ -89,13 +114,15 @@ public class Controller implements Initializable {
     	gcgBoards = new GcgBoard[num];
     	spartiti = new Spartito[num];
     	defineOrchestra();
+    	strumentoLabel.setText(orchestra.get(0).getName());
+    	strumento1Label.setText(orchestra.get(1).getName());
+//    	strumento2Label.setText(orchestra.get(0).getName());
+//    	strumento3Label.setText(orchestra.get(1).getName());
     	try {
 			sint = new Sintetizzatore(orchestra);
 		} catch (InvalidMidiDataException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
@@ -109,7 +136,7 @@ public class Controller implements Initializable {
     }
     
     public void defineOrchestra(){
-		//Strumento(String name, int strumentIndex, int lunghezzaNota, int distanzaNote, int delay)
+		//Strumento(String name, int strumentIndex, double lunghezzaNota, int gapQuartina, boolean sincr
     	
     	int[][] eMinorPentatonic = {{40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 76}};//, 79, 81, 83, 86, 88, 91};
     	
@@ -125,97 +152,115 @@ public class Controller implements Initializable {
     	//int[] pianoBase = {/*31, 33, 35,*/ 38, 40, 42, 43, 45, 47, 48, 50, 52, 54, 55};
     	int[][] scalaViolino = {{50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74}};
     	int[][] drums = {{60}};
-		Strumento s;
-		
-		/*FLAMENCO*/
-		s = new Strumento("pistola", 128, 1, 0, 0, true);
-		s.setScala(drums);
-		s.setForzaOn(100);
-		s.setIndex(64);
-		orchestra.add(s);
-		
-		s = new Strumento("Piano 1", 1, 1, 0, 0, true);
-		s.setScala(aMinArmony);
-		s.setForzaOn(500);
+    	int[] repeat = {1, 2};
+    	
+		Strumento s;   
+		s = new Strumento("Piano 1", 1, 1, 0, true);
+		s.setLunghezzaGcg(0);
+		s.setQuartina(64);
 		s.setOttava(12);
-		s.setIndex(128);
+		s.setInizio(512);
+		s.setRepeat(repeat);
+		s.setScala(armonyC);
+		s.setForzaOn(40);
 		orchestra.add(s);
-		s = new Strumento("Piano 1", 1, 4, 0, 0, false);    
-		s.setScala(aMinScale);
-		//s.setScala(aMinorPentatonic);
-        s.setForzaOn(500);
-        s.setOttava(24);
+		/*FLAMENCO*/
+		s = new Strumento("Kalimba", 108, 1, 0, true);
+		s.setScala(drums);
+		s.setLunghezzaGcg(0);
+		s.setForzaOn(40);
+		orchestra.add(s);
+		
+		s = new Strumento("Piano 1", 1, 1, 0, false);
+		s.setScala(cMajor);
+		s.setForzaOn(200);
+		s.setInizio(1024);
+		s.setContinuaPer(2048);
+		s.setOttava(12);
+		orchestra.add(s);
+		
+		s = new Strumento("Soprano Sax", 64, 1, 0, false);
+		s.setScala(cMajor);
+		s.setInizio(3072);
+        s.setForzaOn(100);
+        //s.setOttava(12);
 		orchestra.add(s);
 
 		
 		/*CLASSICA*/
-		s = new Strumento("pistola", 128, 1, 0, 0, true);
+		s = new Strumento("pistola", 128, 1, 0, true);
 		s.setScala(drums);
 		s.setForzaOn(100);
-		s.setIndex(64);
 		orchestra.add(s);
 		
-		s = new Strumento("Piano 1", 1, 1, 0, 0, true);
+		s = new Strumento("Piano 1", 1, 1, 0, true);
 		s.setScala(armonyC);
 		s.setForzaOn(500);
 		s.setOttava(12);
-		s.setIndex(128);
 		orchestra.add(s);
-		s = new Strumento("Violin", 1, 4, 0, 0, false);    
+		s = new Strumento("Violin", 1, 4, 0, false);    
 		s.setScala(cMajor);
 		//s.setScala(aMinorPentatonic);
         s.setForzaOn(500);
         s.setOttava(12);
 		orchestra.add(s);
-        s = new Strumento("Piano 1", 1, 4, 0.5, 0, false);
+        s = new Strumento("Piano 1", 1, 4, 0, false);
         s.setForzaOn(500);
         s.setOttava(3);
 		orchestra.add(s);
+		s = new Strumento("Violin", 40, 1, 0, true);
+		s.setForzaOn(80);
+        orchestra.add(s);
+		
+		
+		s = new Strumento("Violin", 40, 1, 32, true);
+		s.setLunghezzaGcg(0);
+		s.setScala(scalaViolino);
+        orchestra.add(s);
 		
 		
 		
 		/*AFRICA*/
-        s = new Strumento("Woodblock", 115, 1.8, 0, 0.2, true);
+        s = new Strumento("Woodblock", 115, 1.8, 0, true);
 		s.setScala(drums);
         orchestra.add(s);
-        s = new Strumento("Taiko", 116, 1, 0, 0, false);
+        s = new Strumento("Taiko", 116, 1, 0, false);
         s.setScala(eMinorPentatonic);
         orchestra.add(s);
-        s = new Strumento("Nylon-str.Gt", 24, 1.8, 0, 0.2, false);
+        s = new Strumento("Nylon-str.Gt", 24, 1.8, 0, false);
         orchestra.add(s);
         
 		/*ASIATICA*/
-		s = new Strumento("Pan Flute", 75, 1.8, 0, 0.2, true);
+		s = new Strumento("Pan Flute", 75, 1.8, 0, true);
 		s.setScala(cMajor);
 		s.setOttava(12);
         orchestra.add(s);
-        s = new Strumento("Shamisen", 106, 1.8, 0, 0.2, false);
+        s = new Strumento("Shamisen", 106, 1.8, 0, false);
         orchestra.add(s);
         
         /*BO*/
-        s = new Strumento("Piano 1", 1, 1, 0, 0, true);
+        s = new Strumento("Piano 1", 1, 1, 0, true);
 		
 		s.setScala(scalaViolino);
         orchestra.add(s);
-		s = new Strumento("Fingered Bs.", 33, 2, 0, 0.2, true);
+		s = new Strumento("Fingered Bs.", 33, 2, 0, true);
 		//s.setOttava(-12);
 		orchestra.add(s);
-		s = new Strumento("Gt.Harmonics", 31, 0.7, 0, 0.2, false);
+		s = new Strumento("Gt.Harmonics", 31, 0.7, 0, false);
 		s.setOttava(-12);
         orchestra.add(s);
-        s = new Strumento("Piano 1", 1, 1, 0, 0, true);
+        s = new Strumento("Piano 1", 1, 1, 0, true);
         orchestra.add(s);
-        s = new Strumento("Voice Oohs", 53, 4, 1, 0, true);
+        s = new Strumento("Voice Oohs", 53, 4, 1, true);
         orchestra.add(s);
-        s = new Strumento("Violin", 40, 4, 0, 0, false);
+        
+        s = new Strumento("Violin", 40, 4, 0, false);
         orchestra.add(s);
-        s = new Strumento("Violin", 40, 4, 0, 0, false);
+        s = new Strumento("Violin", 40, 4, 0, false);
         orchestra.add(s);
-        s = new Strumento("Violin", 40, 4, 0, 0, false);
-        orchestra.add(s);
-		s = new Strumento("Xylophone", 13, 1, 0, 0, true);
+		s = new Strumento("Xylophone", 13, 1, 0, true);
 		orchestra.add(s);
-        s = new Strumento("Trumpet", 56, 2, 1, 0);
+        s = new Strumento("Trumpet", 56, 2, 0);
         orchestra.add(s);
         
         for(int i = 0 ; i < orchestra.size(); i++){
@@ -228,31 +273,38 @@ public class Controller implements Initializable {
     private void onRun(Event evt) {
         toggleButtons(false);
 
-        loop = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+        loop = new Timeline(new KeyFrame(Duration.millis(200), e -> {
         	for(int i = 0; i < num; i++){
 	            gofBoards[i].update();
-	            display.displayBoardGof(gofBoards[i]);
+	            display.displayBoardGof(gofBoards[0]);
+	            display.displayBoardGof1(gofBoards[1]);
 	            gcgBoards[i].update();
-	            display.displayBoardGcg(gcgBoards[i]);
+	            display.displayBoardGcg(gcgBoards[0]);
+	            display.displayBoardGcg1(gcgBoards[1]);
 	            
 	            spartiti[i].estrazione(gofBoards[i], gcgBoards[i]);
         	}
         	
-        	try {
-				Thread.sleep(50);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//        	try {
+//				Thread.sleep(100);
+//			} catch (Exception e1) {
+//				e1.printStackTrace();
+//			}
         }));
-        for(int i = 0; i < 20; i++){
+        
+        for(int i = 0; i < 2; i++){
 		    for(int j=0; j<num; j++){
 		    	gofBoards[j].update();
-		        display.displayBoardGof(gofBoards[j]);
+		        //display.displayBoardGof(gofBoards[j]);
 		        gcgBoards[j].update();
-		        display.displayBoardGcg(gcgBoards[j]);
+		        //display.displayBoardGcg(gcgBoards[j]);
 		    }
         }
+        gofBoardsInitial = new GofBoard[1];
+        gcgBoardsInitial = new GcgBoard[1];
+        gofBoardsInitial[0] = new GofBoard(gofBoards[0]);
+        gcgBoardsInitial[0] = new GcgBoard(gcgBoards[0]);
+        
         loop.setCycleCount(100);
         loop.play();
     }
@@ -261,6 +313,15 @@ public class Controller implements Initializable {
     private void onStop(Event evt) throws InterruptedException {
         toggleButtons(true);
         loop.stop();
+        gofBoards[0] = new GofBoard(gofBoardsInitial[0]);
+        
+    	for(int i = 0; i < num ; i++){
+	    	spartiti[i].translate();
+    	}
+    	time = 0;
+    	//spartiti[0].printFlow(1000);
+    	//spartiti[1].printFlow(1000);
+        
         //spartiti[0].printList();
         
         //sint.play(spartito);
@@ -268,31 +329,37 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void onClear(Event evt) {
-        createBoardGof(0, DEFAULT_SIZE, 0);
-        createBoardGcg(0, DEFAULT_SIZE, 10);
+    private void onStopMusic(Event evt) {
+        /*createBoardGof(0, DEFAULT_SIZE, 0);
+        createBoardGcg(0, DEFAULT_SIZE, 10);*/
+    	toggleButtonsMusic(true);
+    	loopMusic.stop();
+    	sint.stopMusic();
     }
 
     @FXML
-    private void onRandomize(Event evt) throws InterruptedException {
+    private void onPlay(Event evt) throws InterruptedException {
         /*createBoardGof(DEFAULT_SIZE, (double) countSlider.getValue()/100);
         createBoardGcg(DEFAULT_SIZE, 10);*/
-    	spartiti[0].translate(0,99999);
-    	spartiti[1].translate(0,99999);
-    	spartiti[2].translate(0,99999);
-    	//spartiti[0].defineBeat();
-    	int inizio = 256;
-    	int fine = 2560;
-    	for(int i = 3; i < num ; i++){
-	    	spartiti[i].translate(inizio,fine);
-	    	inizio = fine;
-	    	fine  = fine + 2560;
-    	}
+
+    	//sint.playFlow(spartiti, 60);
+    	toggleButtonsMusic(false);
+    	int bpm = 70;
+    	int quartina = spartiti[0].getQuartina();
+    	int spacing = 60000/bpm/quartina;
     	
-    	//spartiti[0].printFlow(1000);
-    	//spartiti[1].printFlow(1000);
-    	
-    	sint.playFlow(spartiti, 100);
+        loopMusic = new Timeline(new KeyFrame(Duration.millis(spacing), e -> {
+        	try {
+				sint.playFlowOnce(spartiti, bpm, time);
+				time++;
+			} catch (Exception e1) {
+				
+				e1.printStackTrace();
+			}
+        }));
+        
+    	loopMusic.setCycleCount(spartiti[0].getFlow().size());
+    	loopMusic.play();
     }
     
     @FXML
@@ -316,6 +383,9 @@ public class Controller implements Initializable {
     @FXML
     private void onSave(Event evt) {
         //FileHandler.saveToFile(board);
+    	
+    	gofBoards[0].update();
+        display.displayBoardGof(gofBoards[0]);
     }
 
 
@@ -344,7 +414,6 @@ public class Controller implements Initializable {
         try {
 			sint.play(spartiti[0].getSpartito().get(size - 1));
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}*/
     }
@@ -356,10 +425,23 @@ public class Controller implements Initializable {
         openPresetBtn.setDisable(!enable);
         saveButton.setDisable(!enable);
         runButton.setDisable(!enable);
-        clearButton.setDisable(!enable);
-        randomizeButton.setDisable(!enable);
+        playButton.setDisable(!enable);
+        stopMusicButton.setDisable(!enable);
 
         stopButton.setDisable(enable);
+    }
+    
+    private void toggleButtonsMusic(boolean enable) {
+        countSlider.setDisable(!enable);
+        presetBox.setDisable(!enable);
+        openButton.setDisable(!enable);
+        openPresetBtn.setDisable(!enable);
+        saveButton.setDisable(!enable);
+        runButton.setDisable(!enable);
+        playButton.setDisable(!enable);
+        stopButton.setDisable(!enable);
+        
+        stopMusicButton.setDisable(enable);
     }
 
     private void createBoardGof(int i, int size, double prob) {
@@ -373,12 +455,16 @@ public class Controller implements Initializable {
     }
     
     private void createDisplay() {
-        display = new JavaFXDisplayDriver(gofBoards[0].getSize(), cellSizePx, gofBoards[0], gcgBoards[0]);
-
+        display = new JavaFXDisplayDriver(gofBoards[0].getSize(), cellSizePx, gofBoards[0], gcgBoards[0], gofBoards[1], gcgBoards[1]);
+        
         baseGof.getChildren().clear();
         baseGof.getChildren().add(new Group(display.getPaneGof()));
         baseGcg.getChildren().clear();
-        baseGcg.getChildren().add(new Group(display.getPaneGcg()));   
+        baseGcg.getChildren().add(new Group(display.getPaneGcg()));
+        baseGof1.getChildren().clear();
+        baseGof1.getChildren().add(new Group(display.getPaneGof1()));
+        baseGcg1.getChildren().clear();
+        baseGcg1.getChildren().add(new Group(display.getPaneGcg1())); 
     }
     
     private void attachResizeListener() {

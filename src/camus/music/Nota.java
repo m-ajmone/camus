@@ -1,12 +1,15 @@
 package camus.music;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Nota {
 	private int b;
 	private int m;
 	private int u;
 	
 	private int statoGcg;
-	private double[] lunghezze = {0.3, 0.5, 0.8, 1, 1.2, 1.5};
+	private double[] lunghezze = {0.25, 0.5, 0.75, 1, 1.25, 1.5};
 	private String[] timeMorfology;
 	private Strumento strumento;
 	private int bStart;
@@ -20,11 +23,16 @@ public class Nota {
 	
 	public static final int[] crome = {16,16,32,32,64,64};
 
-	public Nota(int reference, int b, int u) {
+	public Nota(Strumento s, int reference, int b, int u) {
 		super();
-		this.b = b;
-		this.m = reference;
-		this.u = u;
+		int[] sorted = {reference, b, u};
+		Arrays.sort(sorted);
+		this.b = sorted[0];
+		this.u = sorted[2];
+		this.m = sorted[1];
+		
+		this.strumento = s;
+		//System.out.println("b: " + sorted[0] + " m: " + sorted[1] + " u: " + sorted[2]);
 	}
 
 	public Strumento getStrumento() {
@@ -35,15 +43,15 @@ public class Nota {
 		this.strumento = strumento;
 	}
 
-	public void setTimeMorfology(String[] timeMorfology, int quartina){
+	public void setTimeMorfology(String[] timeMorfology){
 		this.timeMorfology = timeMorfology;
 		if(strumento.isSicronizzazione())
-			setTimesSincrona(quartina);
+			setTimesSincrona();
 		else
-			setTimesAsincrona(quartina);
+			setTimesAsincrona();
 	}
 	
-	public void setTimesAsincrona(int quartina){
+	public void setTimesAsincrona(){
 		int duration[] = new int[3];
 		duration[0] = crome[(int)(statoGcg % crome.length)]; //crome[(int)(Math.random()*2)];
 		duration[1] = duration[0] + crome[(int)(statoGcg % crome.length)]; //duration[0] + crome[(int)(Math.random()*2)];
@@ -146,26 +154,27 @@ public class Nota {
 
 	}
 	
-	public void setTimesSincrona(int quartina){
-		int start[] = new int[3];
+	public void setTimesSincrona(){
+		/*int start[] = new int[3];
 		int end[] = new int[3];
-		start[0] = (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
-		start[1] = start[0] + (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
-		start[2] = start[1] + (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
+		start[0] = (int)(crome[(int)(statoGcg % crome.length)] * strumento.getDelay());
+		start[1] = start[0] + (int)(crome[(int)(statoGcg % crome.length)] * strumento.getDelay());
+		start[2] = start[1] + (int)(crome[(int)(statoGcg % crome.length)] * strumento.getDelay());
 
-		end[2] = (int)(quartina * strumento.getLunghezzaNota() * lunghezze[statoGcg]) - (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
-		end[1] = end[2] - (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
-		end[0] = end[1] - (int)(crome[(int)(Math.random() * 2)] * strumento.getDelay());
+		end[2] = (int)(quartina * strumento.getLunghezzaNota() * lunghezze[statoGcg]) - (int)(crome[(int)(statoGcg % crome.length)] * strumento.getDelay());
+		end[1] = end[2] - (int)(crome[(int)(statoGcg % crome.length)] * strumento.getDelay());
+		end[0] = end[1] - (int)(crome[(int)(statoGcg % crome.length)] * strumento.getDelay());*/
+		int start = (int)(crome[(int)(statoGcg % crome.length)] * strumento.getDelay());
+		int end = start + (int)((strumento.getQuartina() * strumento.getLunghezzaNota()) + (int)(crome[(int)(statoGcg % crome.length)] * strumento.getLunghezzaGcg()));
 		
-		bStart = start[0];
-		mStart = start[0];
-		uStart = start[0];
-		bEnd = end[2];
-		mEnd = end[2];
-		uEnd = end[2];
+		bStart = start;
+		mStart = start;
+		uStart = start;
+		bEnd = end;
+		mEnd = end;
+		uEnd = end;
 		//b = b - 2;
 		//u = u + 2;
-		
 		
 		/*if(timeMorfology[0].indexOf('[') == 0){
 			bStart = start[0];
