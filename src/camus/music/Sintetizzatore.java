@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import javax.sound.midi.Instrument;
 import javax.sound.midi.InvalidMidiDataException;
@@ -19,7 +20,8 @@ public class Sintetizzatore {
 	private Synthesizer synthesizer;
 	private final MidiChannel[] midiChannels;
 	private final Instrument[] instruments;
-
+	HashMap<String, Integer> mappaStrumenti;
+	
 	public Sintetizzatore(ArrayList<Strumento> orchestra) throws InvalidMidiDataException, Exception {
 		try {
 			synthesizer = MidiSystem.getSynthesizer();
@@ -45,15 +47,20 @@ public class Sintetizzatore {
 		for(int i=0; i < orchestra.size() && i < synthesizer.getChannels().length; i++){
 			midiChannels[i].programChange(orchestra.get(i).getStrumentIndex());
 		}
-		midiChannels[15].programChange(4); //canale 15 predefinito per il beat
-
+		//midiChannels[15].programChange(4); //canale 15 predefinito per il beat
+		
+		creaMappaStrumenti();
 		System.out.println("[STATE] MIDI channels: " + midiChannels.length);
 		System.out.println("[STATE] Instruments: " + instruments.length);
 	}
-
+	
+	public void changeChannel(int i, int strumentIndex){
+		midiChannels[i].programChange(strumentIndex);
+	}
+	
 	public void playFlow(Spartito spartito, int bpm) throws InterruptedException {
 
-		int quartina = spartito.getQuartina();
+		int quartina = spartito.getStrumento().getQuartina();
 
 		//int spacing = 60000/bpm*4/quartina;
 		int spacing = 60000/bpm/quartina;
@@ -84,7 +91,7 @@ public class Sintetizzatore {
 		//ArrayList<ArrayList<int[]>> flow = mergeSpartiti(spartiti);
 		ArrayList<ArrayList<int[]>> flow = spartiti[0].getFlow();
 
-		int quartina = spartiti[0].getQuartina();
+		int quartina = spartiti[0].getStrumento().getQuartina();
 		//int spacing = 60000/bpm*4/quartina;
 		int spacing = 60000/bpm/quartina;
 
@@ -120,13 +127,13 @@ public class Sintetizzatore {
 	}
 
 	public void playFlowOnce(Spartito[] spartiti, int bpm, int time) throws InterruptedException {
-		int quartina = spartiti[0].getQuartina();
+		int quartina = spartiti[0].getStrumento().getQuartina();
     	int spacing = 60000/bpm/quartina;
     	
-//		if(time % quartina == 0)
-//			System.out.print("\n" + time + "->Q:\t");
-//		else
-//			System.out.print("\n" + time + "->\t");
+		if(time % quartina == 0)
+			System.out.print("\n" + time + "->Q:\t");
+		else
+			System.out.print("\n" + time + "->\t");
 		for(int k = 0; k < spartiti.length; k ++){
 			ArrayList<int[]> beat = spartiti[k].getFlow().get(time);
 			if(beat != null) {
@@ -134,17 +141,16 @@ public class Sintetizzatore {
 					int array[] = beat.get(j);
 					if(array[0] >= 0){
 						midiChannels[array[1]].noteOn(array[0], spartiti[k].getStrumento().getForzaOn());
-//						System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteON:" + array[0] + ";  ");
+						System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteON:" + array[0] + ";  ");
 					}
 					else{
 						midiChannels[array[1]]. noteOff(- array[0], spartiti[k].getStrumento().getForzaOn());
-//						System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteOFF:" + (-array[0]) + ";  ");
+						System.out.print("Channel[" + array[1] + "](" + spartiti[k].getStrumento().getName() + ").noteOFF:" + (-array[0]) + ";  ");
 					}
 				}
-			}//else
-//				System.out.print("X");
+			}else
+				System.out.print("X");
 		}
-		//Thread.sleep(spacing);
 	}
 
 	public ArrayList<ArrayList<int[]>> mergeSpartiti(Spartito[] spartiti){
@@ -175,6 +181,21 @@ public class Sintetizzatore {
 	public void stopMusic(){
 		for (int i = 0; i < midiChannels.length; i++)
 			midiChannels[i].allNotesOff();
+	}
+	
+	private void creaMappaStrumenti(){
+		mappaStrumenti = new HashMap<String, Integer>();
+		Instrument[] inst = synthesizer.getAvailableInstruments();
+		String key;
+		for(int i = 0; i < inst.length && i < 128; i++){
+			key = inst[i].getName().trim();
+			mappaStrumenti.put(key, new Integer(i));
+			System.out.println("MAPPA  name: " + key + " index: " + mappaStrumenti.get(inst[i].getName()));
+		}
+	}
+	
+	public HashMap<String, Integer> listOfInstruments(){
+		return mappaStrumenti;
 	}
 	
 	/* public void play(Spartito s) throws InterruptedException{

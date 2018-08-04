@@ -6,17 +6,21 @@ public class Strumento implements Comparable<Strumento> {
 	
 	private double lunghezzaNota;
 	private double lunghezzaGcg;
-	private int gapQartina;
+	private int gapQuartina;
 	private double delay;
 	private boolean sicronizzazione;
 	private int ottava;
 	private int orchestraIndex;
+	private String nomeScala;
 	private int[][] scala;
 	private int forzaOn;
 	private int quartina;
 	private int[] repeat;
+	private String nomeRepeat;
 	private int inizio;
 	private int continuaPer;
+	private int pausa;
+	private int ripetiPer;
 	
 	public Strumento(){
 		this("Strumento", 0, 1, 0, true);
@@ -30,7 +34,7 @@ public class Strumento implements Comparable<Strumento> {
 		this.name = name;
 		this.strumentIndex = strumentIndex;
 		this.lunghezzaNota = lunghezzaNota;
-		this.gapQartina = gapQuartina;
+		this.gapQuartina = gapQuartina;
 		this.delay = 0;
 		this.sicronizzazione = sincr;
 		this.ottava = 0;
@@ -38,14 +42,54 @@ public class Strumento implements Comparable<Strumento> {
 		int[][] s = {{28, 31, 33, 35, 38, 40, 43, 45, 47, 50, 52, 55, 57, 59, 62, 64, 67, 69, 71, 74, 79, 81, 83, 86, 88, 91}};
 		this.scala = s;
 		this.forzaOn = 1000;
-		this.delay = 0;
 		this.lunghezzaGcg = 1;
 		this.quartina = 64;
 		this.repeat = null;
+		this.nomeRepeat = "[Null]";
 		this.inizio = 0;
 		this.continuaPer = 0;
+		this.pausa = 0;
+		this.ripetiPer = 1;
+		this.nomeScala = "";
 	}
-
+	
+	public Strumento(Strumento s){
+		this.name = s.getName();
+		this.strumentIndex = s.getStrumentIndex();
+		this.lunghezzaNota = s.getLunghezzaNota();
+		this.gapQuartina = s.getGapQuartina();
+		this.delay = s.getDelay();
+		this.sicronizzazione = s.isSicronizzazione();
+		this.ottava = s.getOttava();
+		this.orchestraIndex = s.getOrchestraIndex();
+		int[][] scalaInput = s.getScala();
+		int[][] newScala = new int[scalaInput.length][scalaInput[0].length];
+		for(int i = 0; i < scalaInput.length; i++){
+			for(int j = 0; j < scalaInput[0].length; j++){
+				newScala[i][j] = scalaInput[i][j];
+			}
+		}
+		this.scala = newScala;
+		this.forzaOn = s.getForzaOn();
+		this.lunghezzaGcg = s.getLunghezzaGcg();
+		this.quartina = s.getQuartina();
+		if(s.getRepeat() != null) {
+			int[] repeatInput = s.getRepeat();
+			int[] newRepeat = new int[repeatInput.length];
+			for(int i = 0; i < repeatInput.length; i++){
+				newRepeat[i] = repeatInput[i];
+			}
+			this.repeat = newRepeat;
+		}else
+			this.repeat = null;
+		this.nomeRepeat = s.getNomeRepeat();
+		this.inizio = s.getInizio();
+		this.continuaPer = s.getContinuaPer();
+		this.pausa = s.getPausa();
+		this.ripetiPer = s.getRipetiPer();
+		this.nomeScala = s.getNomeScala();
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -71,11 +115,11 @@ public class Strumento implements Comparable<Strumento> {
 	}
 
 	public int getGapQuartina() {
-		return gapQartina;
+		return gapQuartina;
 	}
 
 	public void setGapQuartina(int gapQartina) {
-		this.gapQartina = gapQartina;
+		this.gapQuartina = gapQartina;
 	}
 
 	public double getDelay() {
@@ -113,9 +157,14 @@ public class Strumento implements Comparable<Strumento> {
 	public int[][] getScala() {
 		return scala;
 	}
-
-	public void setScala(int[][] scala) {
+	
+	public String getNomeScala() {
+		return nomeScala;
+	}
+	
+	public void setScala(int[][] scala, String nomeScala) {
 		this.scala = scala;
+		this.nomeScala = nomeScala;
 	}
 	
 	public double getLunghezzaGcg() {
@@ -145,9 +194,14 @@ public class Strumento implements Comparable<Strumento> {
 	public int[] getRepeat() {
 		return repeat;
 	}
-
-	public void setRepeat(int[] repeat) {
+	
+	public String getNomeRepeat() {
+		return nomeRepeat;
+	}
+	
+	public void setRepeat(int[] repeat, String nomeRepeat) {
 		this.repeat = repeat;
+		this.nomeRepeat = nomeRepeat;
 	}
 	
 	public int getInizio() {
@@ -164,6 +218,22 @@ public class Strumento implements Comparable<Strumento> {
 
 	public void setContinuaPer(int continuaPer) {
 		this.continuaPer = continuaPer;
+	}
+	
+	public int getPausa() {
+		return pausa;
+	}
+
+	public void setPausa(int pausa) {
+		this.pausa = pausa;
+	}
+
+	public int getRipetiPer() {
+		return ripetiPer;
+	}
+
+	public void setRipetiPer(int ripetiPer) {
+		this.ripetiPer = ripetiPer;
 	}
 
 	@Override

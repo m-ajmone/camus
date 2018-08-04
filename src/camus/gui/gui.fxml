@@ -9,10 +9,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox fx:id="rootBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camus.gui.Controller">
+<HBox fx:id="rootBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.00" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camus.gui.Controller">
    <children>
-   	  <VBox fx:id="boards" prefHeight="477.0" prefWidth="760.0">
-   	  	  <HBox fx:id="strumento1">
+   	  <VBox fx:id="boards" prefHeight="1000.0" prefWidth="760.0">
+   	  	  <HBox fx:id="strumento0">
    	  	  	 <HBox prefHeight="475.0" prefWidth="475.0">
                  <children>
                     <Label fx:id="strumentoLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="196.0" text="STRUMENTO 1" textAlignment="CENTER">
@@ -36,7 +36,7 @@
 		         </HBox.margin>
 		      </FlowPane>
 	      </HBox>
-	      <HBox fx:id="strumento2">
+	      <HBox fx:id="strumento1">
 	      	  <HBox prefHeight="475.0" prefWidth="475.0">
                  <children>
                     <Label fx:id="strumento1Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="196.0" text="STRUMENTO 2" textAlignment="CENTER">
@@ -51,12 +51,12 @@
               </HBox>
 		      <FlowPane fx:id="baseGof1" prefHeight="475.0" prefWidth="475.0">
 		         <HBox.margin>
-		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 		         </HBox.margin>
 		      </FlowPane>
 		      <FlowPane fx:id="baseGcg1" prefHeight="475.0" prefWidth="475.0">
 		         <HBox.margin>
-		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 		         </HBox.margin>
 		      </FlowPane>
 	      </HBox>
@@ -75,16 +75,16 @@
               </HBox>
 		      <FlowPane fx:id="baseGof2" prefHeight="475.0" prefWidth="475.0">
 		         <HBox.margin>
-		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 		         </HBox.margin>
 		      </FlowPane>
 		      <FlowPane fx:id="baseGcg2" prefHeight="475.0" prefWidth="475.0">
 		         <HBox.margin>
-		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 		         </HBox.margin>
 		      </FlowPane>
 	      </HBox>
-	      <HBox fx:id="strumento2">
+	      <HBox fx:id="strumento3">
 	      	  <HBox prefHeight="475.0" prefWidth="475.0">
                  <children>
                     <Label fx:id="strumento3Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="196.0" text="STRUMENTO 2" textAlignment="CENTER">
@@ -99,12 +99,12 @@
               </HBox>
 		      <FlowPane fx:id="baseGof3" prefHeight="475.0" prefWidth="475.0">
 		         <HBox.margin>
-		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 		         </HBox.margin>
 		      </FlowPane>
 		      <FlowPane fx:id="baseGcg3" prefHeight="475.0" prefWidth="475.0">
 		         <HBox.margin>
-		            <Insets bottom="485.0" left="10.0" right="10.0" top="10.0" />
+		            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 		         </HBox.margin>
 		      </FlowPane>
 	      </HBox>
@@ -116,7 +116,7 @@
                   <Insets top="20.0" />
                </opaqueInsets>
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="196.0" text="CAMUS 2.0" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="196.0" text="CAMUS 3.0" textAlignment="CENTER">
                      <font>
                         <Font size="29.0" />
                      </font>
@@ -132,129 +132,75 @@
                   <Insets left="5.0" />
                </VBox.margin>
             </TextFlow>
-            <VBox prefHeight="275.0" prefWidth="197.0">
-               <children>
-                  <VBox prefHeight="27.0" prefWidth="189.0">
-                     <children>
-                        <VBox prefHeight="33.0" prefWidth="195.0">
-                           <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label text="Cell density: ">
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin></Label>
-                                    <Label fx:id="countLabel" text="30%" />
-                                 </children>
-                              </HBox>
-                              <Slider fx:id="countSlider" onDragDetected="#onSlide" onDragDone="#onSlide" onDragDropped="#onSlide" onDragEntered="#onSlide" onDragExited="#onSlide" onDragOver="#onSlide" onMouseDragEntered="#onSlide" onMouseDragExited="#onSlide" onMouseDragOver="#onSlide" onMouseDragReleased="#onSlide" value="30.0" />
-                           </children>
-                        </VBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="5.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <Separator opacity="0.0" prefWidth="200.0" />
-                  <VBox prefHeight="118.0" prefWidth="193.0">
-                     <children>
-                        <Separator prefHeight="16.0" prefWidth="195.0" />
-                        <Label prefHeight="15.0" prefWidth="102.0" text="Choose preset:">
-                           <opaqueInsets>
-                              <Insets top="10.0" />
-                           </opaqueInsets>
-                        </Label>
-                        <HBox fx:id="presetBox" prefHeight="92.0" prefWidth="183.0" />
-                     </children>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets left="5.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <Separator opacity="0.0" prefHeight="13.0" prefWidth="195.0">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding></Separator>
-                  <Button fx:id="openPresetBtn" mnemonicParsing="false" onAction="#onPresetOpen" text="Open">
-                     <VBox.margin>
-                        <Insets left="70.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </VBox>
-            <VBox prefHeight="61.0" prefWidth="195.0">
-               <children>
-                  <Separator prefHeight="18.0" prefWidth="195.0" />
-                  <Label prefHeight="15.0" prefWidth="137.0" text="Save or load board:">
-                     <VBox.margin>
-                        <Insets left="50.0" />
-                     </VBox.margin></Label>
-                  <BorderPane prefHeight="8.0" prefWidth="195.0">
-                     <right>
-                        <FlowPane prefHeight="35.0" prefWidth="150.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <Button fx:id="openButton" mnemonicParsing="false" onAction="#onOpen" text="Load">
-                                 <opaqueInsets>
-                                    <Insets right="10.0" />
-                                 </opaqueInsets>
-                              </Button>
-                              <Separator opacity="0.0" orientation="VERTICAL" prefHeight="35.0" prefWidth="13.0" />
-                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSave" text="Save">
-                                 <opaqueInsets>
-                                    <Insets left="10.0" />
-                                 </opaqueInsets>
-                              </Button>
-                           </children>
-                        </FlowPane>
-                     </right>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </BorderPane>
-               </children>
-            </VBox>
             <BorderPane prefHeight="33.0" prefWidth="195.0">
-               <center>
-                  <Button fx:id="playButton" mnemonicParsing="false" onAction="#onPlay" text="Play" BorderPane.alignment="CENTER" />
-               </center>
                <right>
-                  <Button fx:id="stopMusicButton" mnemonicParsing="false" onAction="#onStopMusic" text="Stop Music" BorderPane.alignment="CENTER" />
-               </right>
-               <top>
-                  <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
-               </top>
-               <left>
-                  <Label text="Music:" BorderPane.alignment="CENTER" />
-               </left>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </BorderPane>
-            <BorderPane prefHeight="39.0" prefWidth="195.0">
-               <left>
-                <Button fx:id="runButton" mnemonicParsing="false" onAction="#onRun" prefHeight="25.0" prefWidth="49.0" text="Run" BorderPane.alignment="CENTER" />
-               </left>
-               <center>
-                  <Button fx:id="stopButton" disable="true" mnemonicParsing="false" onAction="#onStop" prefHeight="25.0" prefWidth="48.0" text="Stop" BorderPane.alignment="CENTER" />
-               </center>
-               <top>
-                  <Separator prefHeight="14.0" prefWidth="195.0" BorderPane.alignment="CENTER" />
-               </top>
-               <right>
-                  <Button fx:id="aboutButton" mnemonicParsing="false" onAction="#onAbout" text="One step" BorderPane.alignment="CENTER" />
+                  <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#onSettings" text="Settings" BorderPane.alignment="CENTER" />
                </right>
                <padding>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </BorderPane>
+            <VBox prefHeight="33.0" prefWidth="65.0">
+            	<BorderPane prefHeight="33.0" prefWidth="195.0">
+	                <left>
+              			<Label text="Musica:" BorderPane.alignment="CENTER" />
+              		</left>
+              		<right>
+		              	<HBox>
+			            	<Label text="Tempo:" BorderPane.alignment="CENTER" />
+			            	<Label fx:id="timeLabel" BorderPane.alignment="CENTER" />
+			            </HBox>
+		            </right>
+	            </BorderPane>
+	            <BorderPane prefHeight="33.0" prefWidth="195.0">
+	               <left>
+	                  	<Button fx:id="playButton" mnemonicParsing="false" onAction="#onPlay" text="Play" BorderPane.alignment="CENTER" />
+	               </left>
+	               <center>
+	                  <Button fx:id="pauseMusicButton" mnemonicParsing="false" onAction="#onPauseMusic" text="Pause" BorderPane.alignment="CENTER" />
+	               </center>
+	               <right>
+	                  <Button fx:id="stopMusicButton" mnemonicParsing="false" onAction="#onStopMusic" text="Stop" BorderPane.alignment="CENTER" />
+	               </right>
+	               <top>
+	                  <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
+	               </top>
+	               <padding>
+	                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+	               </padding>
+	            </BorderPane>
+            </VBox>
+            <Separator opacity="0.0" orientation="VERTICAL" prefHeight="35.0" prefWidth="13.0" />
+            <VBox prefHeight="33.0" prefWidth="65.0">
+              	<BorderPane prefHeight="33.0" prefWidth="195.0">
+	                <left>
+              			<Label text="Automi cellulari:" BorderPane.alignment="CENTER" />
+              		</left>
+              		<right>
+		              	<HBox>
+			            	<Label text="Iterazione:" BorderPane.alignment="CENTER" />
+			            	<Label fx:id="iterLabel" BorderPane.alignment="CENTER" />
+			            </HBox>
+		            </right>
+	            </BorderPane>
+	            <BorderPane prefHeight="39.0" prefWidth="195.0">
+	               <left>
+	                <Button fx:id="runButton" mnemonicParsing="false" onAction="#onRun" prefHeight="25.0" prefWidth="49.0" text="Run" BorderPane.alignment="CENTER" />
+	               </left>
+	               <center>
+	                  <Button fx:id="stopButton" disable="true" mnemonicParsing="false" onAction="#onStop" prefHeight="25.0" prefWidth="78.0" text="Stop/Estrai" BorderPane.alignment="CENTER" />
+	               </center>
+	               <right>
+	                  <Button fx:id="resetButton" disable="true" mnemonicParsing="false" onAction="#onReset" prefHeight="25.0" prefWidth="48.0" text="Reset" BorderPane.alignment="CENTER" />
+	               </right>
+	               <top>
+	                  <Separator prefHeight="14.0" prefWidth="195.0" BorderPane.alignment="CENTER" />
+	               </top>
+	               <padding>
+	                  <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+	               </padding>
+	            </BorderPane>
+            </VBox>
          </children>
          <padding>
             <Insets right="10.0" />
